@@ -1,0 +1,73 @@
+---
+
+#########################################################
+## Hashicorp Vault Administration module               ##
+#########################################################
+
+# Validate variables for Hashicorp Vault administration module.
+- name: Validate variables for Hashicorp Vault administration module...
+  ansible.builtin.assert:
+    that: "varitem is defined"
+    fail_msg: "Required variable '{{ varitem }}' has not been provided."
+    quiet: true
+  loop_control:
+    loop_var: varitem
+  loop:
+    - vault_address
+    - vault_token
+
+#########################################################
+## Start service                                       ##
+#########################################################
+
+- name: start action...
+  when: action == "start"
+  block:
+
+      # Show information message
+    - name: Information message
+      ansible.builtin.debug:
+        msg: "This part is not (yet) implemented."
+
+    # Stop playbook
+    - name: Stop playbook
+      ansible.builtin.meta: end_play
+
+#########################################################
+## Stop service                                        ##
+#########################################################
+
+- name: stop action...
+  when: action == "stop"
+  block:
+
+      # Show information message
+    - name: Information message
+      ansible.builtin.debug:
+        msg: "This part is not (yet) implemented."
+
+    # Stop playbook
+    - name: Stop playbook
+      ansible.builtin.meta: end_play
+
+#########################################################
+## Update                                              ##
+#########################################################
+
+- name: Update action...
+  when: action == "update"
+  block:
+
+      # Show information message
+    - name: Information message
+      ansible.builtin.debug:
+        msg: "This part is not (yet) implemented."
+
+    # Stop playbook
+    - name: Stop playbook
+      ansible.builtin.meta: end_play
+
+
+#########################################################
+## Post-actions                                        ##
+#########################################################

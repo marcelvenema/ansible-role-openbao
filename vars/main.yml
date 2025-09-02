@@ -1,0 +1,125 @@
+---
+
+actions:
+
+  # Deployment actions
+  - install:
+      description : "Installation of the latest version of OpenBao. Basic configuration."
+      icon : "media/icon_openbao.png"
+      parameters:
+        - uninstall:
+            description : "Start uninstallation before installation begins. true/false. Default is 'true'."
+            required : false
+            value: "true"
+
+  - uninstall:
+      description : "Uninstallation of OpenBao. Removes the container, files, users, and groups."
+      icon : "media/icon_openbao.png"
+
+  - update:
+      description : "Update OpenBao to the latest version."
+      icon : "media/icon_openbao.png"
+
+  - configure:
+      description : "Configure OpenBao. Create a token and unseal keys. Unseal OpenBao."
+      icon : "media/icon_openbao.png"
+
+  # Administration actions
+  - start:
+      description : "Start OpenBao."
+      icon : "media/icon_openbao.png"
+
+  - stop:
+      description : "Stop OpenBao."
+      icon : "media/icon_openbao.png"
+
+  - unseal:
+      description : "Unseal OpenBao."
+      icon : "media/icon_openbao.png"
+      parameters:
+        - vault_address:
+            description : "URL to Vault, for example `https://"
+        - vault_unseal_keys:
+            description : "Unseal keys"
+
+  # Secret engine actions
+  - get_secret_engine:
+      description : "Retrieve the configuration of a secret engine."
+      icon : "media/icon_openbao.png"
+
+  - create_secret_engine:
+      description : "Create a secret engine."
+      icon : "media/icon_openbao.png"
+
+  - destroy_secret_engine:
+      description : "Remove a secret engine."
+      icon : "media/icon_openbao.png"
+
+  # Secret actions
+  - get_secret:
+      description : "Retrieve a secret."
+      icon : "media/icon_openbao.png"
+
+  - create_secret:
+      description : "Create a secret."
+      icon : "media/icon_openbao.png"
+
+  - destroy_secret:
+      description : "Remove a secret."
+      icon : "media/icon_openbao.png"
+
+  - import_secrets:
+      description : "Import a secret into Vault."
+      icon : "media/icon_openbao.png"
+      parameters:
+        - vault_address:
+            description : "URL to Vault, for example `https://192.168.1.0:8200`."
+            required : true
+            value: ""
+        - vault_token:
+            description : "Token for access to Vault."
+            required : true
+            value: ""
+
+  - export_secrets:
+      description : "Export a secret from Vault."
+      icon : "media/icon_openbao.png"
+      parameters:
+        - vault_address:
+            description : "URL to Vault, for example `https://192.168.1.0:8200`."
+            required : true
+            value: ""
+        - vault_token:
+            description : "Token for access to Vault."
+            required : true
+            value: ""
+
+  # Policy actions
+  - get_policy:
+      description : "Retrieve the configuration of a policy."
+      icon : "media/icon_openbao.png"
+
+  - create_policy:
+      description : "Create a policy."
+      icon : "media/icon_openbao.png"
+
+  - destroy_policy:
+      description : "Remove a policy."
+      icon : "media/icon_openbao.png"
+
+  # AppRole actions
+  - get_approle:
+      description : "Retrieve the configuration of an approle."
+      icon : "media/icon_openbao.png"
+
+  - create_approle:
+      description : "Create an approle."
+      icon : "media/icon_openbao.png"
+
+  - destroy_approle:
+      description : "Remove an approle."
+      icon : "media/icon_openbao.png"
+
+vault:
+    id: ""
+    vault_name: "vault"

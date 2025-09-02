@@ -1,0 +1,40 @@
+---
+
+#########################################################
+## Update                                              ##
+#########################################################
+
+#########################################################
+## Pre-installation platform check                     ##
+#########################################################
+
+# Determine platform
+- name: Determine platform for installation...
+  ansible.builtin.include_role:
+    name: server-config
+  vars:
+    action: "platform_check"
+  register: platform
+
+#########################################################
+## Update via podman                                   ##
+#########################################################
+
+- name: Update Vault on podman
+  when: platform == "podman"
+  block:
+
+    # Update podman container
+    - name: Update Podman container...
+      ansible.builtin.include_role:
+        name: podman
+      vars:
+        action: "update_container"
+        container_name: "{{vault_vars.container.name}}"
+        container_repository_url: "{{ vault_vars.container.repository_url }}"
+
+#########################################################
+## Post-actions                                        ##
+#########################################################
+
+# Unset variables

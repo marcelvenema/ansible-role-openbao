@@ -1,0 +1,215 @@
+---
+
+#########################################################
+## OpenBao install action                              ##
+#########################################################
+
+#########################################################
+## Pre-installation uninstall                          ##
+#########################################################
+
+# Run uninstall if uninstall is set
+- name: Run uninstall playbook if set
+  ansible.builtin.include_tasks: uninstall.yml
+  ignore_errors: true
+  when: openbao_vars.container.uninstall == true
+
+#########################################################
+## Installation on podman                              ##
+#########################################################
+
+- name: "Install {{ role_container_name }} container on podman..."
+  when: openbao_vars.container.platform == "podman"
+  block:
+
+    # Gather installed packages
+    - name: Gather installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    # Check if podman is detected
+    - name: Gather information (podman)...
+      ansible.builtin.assert:
+        that: '"podman" in ansible_facts.packages'
+        fail_msg: "Podman is not installed. Please install Podman first. Cannot continue..."
+
+    #####################################################
+    ## Volume configuration                            ##
+    #####################################################
+
+    # Create volumes
+    - name: Create configuration folders...
+      ansible.builtin.include_role:
+        name: podman
+      vars:
+        action: create_volumes
+        container_volumes: "{{ openbao_vars.container.volumes }}"
+        volume_mode: "0777"
+
+    #####################################################
+    ## OpenBao SSL certificate                         ##
+    #####################################################
+
+    # Create temp folder for SSL certificate
+    - name: Create temporary folder...
+      ansible.builtin.file:
+        path: "/tmp/vault/certs"
+        state: directory
+
+    # Create SSL certificate
+    - name: Create SSL certificate for Hashicorp Vault...
+      ansible.builtin.include_tasks:
+        file: create_ssl_certificate.yml
+      vars:
+        destination_folder: "/tmp/vault/certs"
+
+    # Copy SSL certificate to container
+    - name: Copy SSL certificate to container volume...
+      ansible.builtin.include_role:
+        name: podman
+      vars:
+        action: copy_to_volume
+        volume_source_folder: "/tmp/vault/certs/"
+        volume_destination_folder: "/vault/config"
+        volume_mode: "0777"
+
+    # Delete temp folder
+    - name: Delete temporary folder...
+      ansible.builtin.file:
+        path: "/tmp/vault/certs"
+        state: absent
+
+    #####################################################
+    ## Vault configuration                             ##
+    #####################################################
+
+    # Create temp folder for configuration file
+    - name: Create temporary folder...
+      ansible.builtin.file:
+        path: "/tmp/vault"
+        state: directory
+
+    # Create configuration file
+    - name: Create Hashicorp Vault configuration file...
+      ansible.builtin.template:
+        src: ./templates/vault.podman_config.hcl.j2
+        dest: "/tmp/vault/vault.hcl"
+
+    # Copy configuration file to container
+    - name: Copy configuration file to container...
+      ansible.builtin.include_role:
+        name: podman
+      vars:
+        action: copy_to_volume
+        volume_source_folder: "/tmp/vault/"
+        volume_destination_folder: "/vault/config"
+        volume_mode: "0777"
+
+    # Delete temp folder
+    - name: Delete temporary folder...
+      ansible.builtin.file:
+        path: "/tmp/vault"
+        state: absent
+
+    #####################################################
+    ## Firewall configuration                          ##
+    #####################################################
+
+    # Open firewall ports
+    - name: Open firewall ports...
+      become: true
+      ansible.posix.firewalld:
+        port: "{{ vault_vars.container.ports[0].split(':')[0] }}/tcp"
+        permanent: true
+        state: enabled
+        immediate: true
+
+    #####################################################
+    ## Import container                                ##
+    #####################################################
+
+    # Import container
+    - name: "Install {{ vault_vars.container.name }} container on podman"
+      ansible.builtin.include_role:
+        name: podman
+      vars:
+        action: import_container
+        container_repository_url: "{{ vault_vars.container.repository_url }}"
+        container_repository_tag: "{{ vault_vars.container.repository_tag | default(omit) }}"
+        container_repository_checksum: "{{ vault_vars.container.repository_checksum | default(omit) }}"
+        container_repository_checksum_algorithm: "{{ vault_vars.container.repository_checksum_algorithm | default(omit) }}"
+        container_name: "{{ vault_vars.container.name }}"
+        container_ports: "{{ vault_vars.container.ports }}"
+        container_volumes: "{{ vault_vars.container.volumes }}"
+        container_command: "vault server -config=/vault/config/vault.hcl"
+        container_security_opt: ["label=disable"]
+        container_cap_add: IPC_LOCK
+        container_env: "{{ vault_vars.container.environment | default(omit) }}"
+        container_healthcheck: "{{ vault_vars.container.healthcheck | default(omit) }}"
+        container_healthcheck_fail: "{{ vault_vars.container.healthcheck_fail | default('none') }}"
+        container_healthcheck_retries: "{{ vault_vars.container.healthcheck_retries | default(omit) }}"
+        container_healthcheck_interval: "{{ vault_vars.container.healthcheck_interval | default(omit) }}"
+        container_healthcheck_timeout: "{{ vault_vars.container.healthcheck_timeout | default(omit) }}"
+        container_healthcheck_start: "{{ vault_vars.container.healthcheck_start | default(omit) }}"
+
+#########################################################
+## Installation on kubernetes                         ##
+#########################################################
+
+- name: Install Vault on Kubernetes...
+  when: vault_vars.container.platform == "kubernetes"
+  block:
+
+    # Debug message
+    - name: Debug message
+      ansible.builtin.debug:
+        msg: "Install container on kubernetes"
+
+    # Show information message
+    - name: This part is not (yet) implemented.
+      ansible.builtin.debug:
+        msg: "This part is not (yet) implemented."
+
+    # Stop playbook
+    - name: Stop playbook
+      ansible.builtin.meta: end_play
+
+#########################################################
+## Installation on host                                ##
+#########################################################
+
+- name: Install Vault on host...
+  when: vault_vars.container.platform == "host"
+  block:
+
+    # Show information message
+    - name: This part is not (yet) implemented.
+      ansible.builtin.debug:
+        msg: "This part is not (yet) implemented."
+
+    # Stop playbook
+    - name: Stop playbook
+      ansible.builtin.meta: end_play
+
+#########################################################
+## Configuration                                       ##
+#########################################################
+
+# Get ip address
+- name: Register variable (vault_address)...
+  ansible.builtin.set_fact:
+    vault_address: "https://{{ ansible_default_ipv4.address }}:{{ vault_vars.container.ports[0].split(':')[0] }}"
+
+# Configure Hashicorp Vault
+- name: Configure application
+  ansible.builtin.include_tasks: configure.yml
+  vars:
+    action: configure
+
+#########################################################
+## Post-install                                        ##
+#########################################################
+
+# Unset variables
+#- name: Unset variables...
+#  ansible.builtin.set_fact:
