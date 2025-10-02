@@ -19,7 +19,7 @@ Available variables are listed below, along with default values (see `defaults/m
 <table style="border:0px; width:100%">
   <tr><th><a href="#Deployment">Deployment</a></th><th><a href="#Secrets-Management">Secrets Management</a></th><th><a href="#Secret-Engines">Secret Engines</a></th><th><a href="#Policies">Policies</a></th><th><a href="#AppRoles">AppRoles</a></th><th><a href="#Administration">Administration</a></th></tr>
   <tr>
-    <td valign=top>install<br>configure<br>uninstall<br>update<br></td>
+    <td valign=top>install<br>uninstall<br>update<br></td>
     <td valign=top>create_secret<br>destroy_secret<br>get_secret<br>import_secret<br>export_secret<br></td>
     <td valign=top>create_secret_engine<br>destroy_secret_engine<br></td>
     <td valign=top>create_policy<br>destroy_policy<br></td>
@@ -36,18 +36,19 @@ This role uses the `openbao` variable for configuration parameters. See [default
 ### Deployment
 
 action: **install**<br>
-Installation of the latest version of OpenBao Vault.<br>
+_Installation of the latest version of OpenBao Vault_.<br>
+This action will install the latest version of OpenBao Vault on the target hosts using the specified container image and configuration parameters. It ensures that the Vault service is set up and ready for use according to the provided variables.<br>
 variables:<br>
 <kbd>openbao - container - name</kbd> : (optional) Name of container. Default is 'openbao'.<br>
 <kbd>openbao - container - repository_url</kbd> - URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
 <kbd>openbao - container - repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
 <kbd>openbao - container - repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
-<kbd>repository_checksum_algorithm (optional)</kbd> : Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
-<kbd>platform (optional)</kbd>  : Install on a specific platform, for example, podman, kubernetes, host. Default is podman-. (podman, kubernetes, host)<br>
-<kbd>uninstall (optional)</kbd> : true/false. When true, uninstall is started before installation.<br>
+<kbd>openbao - container - repository_checksum_algorithm</kbd> : (optional) Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
+<kbd>openbao - container - platform</kbd>  : (optional) Install on a specific platform, for example, podman, kubernetes, host. Default is podman-. (podman, kubernetes, host).<br>
+<kbd>openbao - container - uninstall</kbd> : (optional) true/false. When true, uninstall is started before installation.<br>
 
 ```
-- name: Install HashiCorp Vault
+- name: Install OpenBao Vault
     hosts: vault-server
     roles:
      - role: openbao
@@ -59,32 +60,55 @@ variables:<br>
 
 ```
 
+
 action: **uninstall**<br>
-Uninstallation of HashiCorp Vault.<br>
+_Uninstallation of OpenBao Vault_.<br>
+This action will remove the OpenBao Vault container from the target host, ensuring all associated services are stopped and the container is deleted. Use the `keep_data` variable to retain data folders if required.
 variables:<br>
 <kbd>keep_data (optional)</kbd> : true/false. When true, data folders are kept during uninstall. Default is false.<br>
 
 ```
-- name: Uninstall HashiCorp Vault
+- name: Uninstall OpenBao Vault
     hosts: vault-server
     roles:
-     - role: vault
+     - role: openbao
          vars:
              action: uninstall
+             keep_data: true
 ```
+
 
 action: **update**<br>
-Update to the latest HashiCorp Vault version.<br>
+_Update to the latest OpenBao Vault version_.<br>
+This action will update the current OpenBao Vault server to a newer version. By default, it reads the `repository_url` configured in Vault and attempts to download and install the latest available version. If a specific `repository_url` is provided, the update will use that source instead. The update process ensures that the Vault service is upgraded safely, minimizing downtime and preserving existing configuration and data. Use this action to keep your OpenBao Vault deployment up to date with the latest features and security patches.  
 variables:<br>
-<kbd>(none)</kbd> : No variables required.<br>
+<kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
+<kbd>vault_token</kbd> : Token for Vault access.<br>
+<kbd>secret_name</kbd> : unique identification of OpenBao instance, for example server name/cluster name. Will be used to get/put parameters in Vault.<br>
 
 ```
-- name: Update HashiCorp Vault
+- name: Update OpenBao Vault
     hosts: vault-server
     roles:
-     - role: vault
+     - role: openbao
          vars:
              action: update
+             vault_address: http://localhost:8200
+             vault_token: <token>
+             secret_name: 10-233-0-101
+
+or:
+
+- name: Update OpenBao Vault
+    hosts: vault-server
+    roles:
+     - role: openbao
+         vars:
+             action: update
+             openbao:
+               container:
+                 repository_url: "https://<nexus repository>/repository/containers/openbao_2.4.1.tar"
+
 ```
 
 
