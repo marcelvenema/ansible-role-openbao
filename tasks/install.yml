@@ -57,7 +57,7 @@
         state: directory
 
     # Create SSL certificate
-    - name: Create SSL certificate for Hashicorp Vault...
+    - name: Create SSL certificate for OpenBao...
       ansible.builtin.include_tasks:
         file: create_ssl_certificate.yml
       vars:
@@ -119,7 +119,7 @@
     - name: Open firewall ports...
       become: true
       ansible.posix.firewalld:
-        port: "{{ vault_vars.container.ports[0].split(':')[0] }}/tcp"
+        port: "{{ openbao_vars.container.ports[0].split(':')[0] }}/tcp"
         permanent: true
         state: enabled
         immediate: true
@@ -129,67 +129,28 @@
     #####################################################
 
     # Import container
-    - name: "Install {{ vault_vars.container.name }} container on podman"
+    - name: "Install {{ openbao_vars.container.name }} container on podman"
       ansible.builtin.include_role:
         name: podman
       vars:
         action: import_container
-        container_repository_url: "{{ vault_vars.container.repository_url }}"
-        container_repository_tag: "{{ vault_vars.container.repository_tag | default(omit) }}"
-        container_repository_checksum: "{{ vault_vars.container.repository_checksum | default(omit) }}"
-        container_repository_checksum_algorithm: "{{ vault_vars.container.repository_checksum_algorithm | default(omit) }}"
-        container_name: "{{ vault_vars.container.name }}"
-        container_ports: "{{ vault_vars.container.ports }}"
-        container_volumes: "{{ vault_vars.container.volumes }}"
+        container_repository_url: "{{ openbao_vars.container.repository_url }}"
+        container_repository_tag: "{{ openbao_vars.container.repository_tag | default(omit) }}"
+        container_repository_checksum: "{{ openbao_vars.container.repository_checksum | default(omit) }}"
+        container_repository_checksum_algorithm: "{{ openbao_vars.container.repository_checksum_algorithm | default(omit) }}"
+        container_name: "{{ openbao_vars.container.name }}"
+        container_ports: "{{ openbao_vars.container.ports }}"
+        container_volumes: "{{ openbao_vars.container.volumes }}"
         container_command: "vault server -config=/vault/config/vault.hcl"
         container_security_opt: ["label=disable"]
         container_cap_add: IPC_LOCK
-        container_env: "{{ vault_vars.container.environment | default(omit) }}"
-        container_healthcheck: "{{ vault_vars.container.healthcheck | default(omit) }}"
-        container_healthcheck_fail: "{{ vault_vars.container.healthcheck_fail | default('none') }}"
-        container_healthcheck_retries: "{{ vault_vars.container.healthcheck_retries | default(omit) }}"
-        container_healthcheck_interval: "{{ vault_vars.container.healthcheck_interval | default(omit) }}"
-        container_healthcheck_timeout: "{{ vault_vars.container.healthcheck_timeout | default(omit) }}"
-        container_healthcheck_start: "{{ vault_vars.container.healthcheck_start | default(omit) }}"
-
-#########################################################
-## Installation on kubernetes                         ##
-#########################################################
-
-- name: Install Vault on Kubernetes...
-  when: vault_vars.container.platform == "kubernetes"
-  block:
-
-    # Debug message
-    - name: Debug message
-      ansible.builtin.debug:
-        msg: "Install container on kubernetes"
-
-    # Show information message
-    - name: This part is not (yet) implemented.
-      ansible.builtin.debug:
-        msg: "This part is not (yet) implemented."
-
-    # Stop playbook
-    - name: Stop playbook
-      ansible.builtin.meta: end_play
-
-#########################################################
-## Installation on host                                ##
-#########################################################
-
-- name: Install Vault on host...
-  when: vault_vars.container.platform == "host"
-  block:
-
-    # Show information message
-    - name: This part is not (yet) implemented.
-      ansible.builtin.debug:
-        msg: "This part is not (yet) implemented."
-
-    # Stop playbook
-    - name: Stop playbook
-      ansible.builtin.meta: end_play
+        container_env: "{{ openbao_vars.container.environment | default(omit) }}"
+        container_healthcheck: "{{ openbao_vars.container.healthcheck | default(omit) }}"
+        container_healthcheck_fail: "{{ openbao_vars.container.healthcheck_fail | default('none') }}"
+        container_healthcheck_retries: "{{ openbao_vars.container.healthcheck_retries | default(omit) }}"
+        container_healthcheck_interval: "{{ openbao_vars.container.healthcheck_interval | default(omit) }}"
+        container_healthcheck_timeout: "{{ openbao_vars.container.healthcheck_timeout | default(omit) }}"
+        container_healthcheck_start: "{{ openbao_vars.container.healthcheck_start | default(omit) }}"
 
 #########################################################
 ## Configuration                                       ##
@@ -198,9 +159,9 @@
 # Get ip address
 - name: Register variable (vault_address)...
   ansible.builtin.set_fact:
-    vault_address: "https://{{ ansible_default_ipv4.address }}:{{ vault_vars.container.ports[0].split(':')[0] }}"
+    vault_address: "https://{{ ansible_default_ipv4.address }}:{{ openbao_vars.container.ports[0].split(':')[0] }}"
 
-# Configure Hashicorp Vault
+# Configure OpenBao
 - name: Configure application
   ansible.builtin.include_tasks: configure.yml
   vars:

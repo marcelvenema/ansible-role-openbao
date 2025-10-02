@@ -1,11 +1,11 @@
 ---
 
 #########################################################
-## Hashicorp Vault AppRole module                      ##
+## OpenBao Vault AppRole module                        ##
 #########################################################
 
 # Validate global variables
-- name: Validate global variables for Hashicorp Vault approles module.
+- name: Validate global variables for OpenBao Vault approles module.
   ansible.builtin.assert:
     that: "varitem is defined"
     fail_msg: "Required variable '{{ varitem }}' has not been provided."

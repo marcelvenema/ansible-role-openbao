@@ -23,21 +23,21 @@
 ## Uninstall via podman                                ##
 #########################################################
 
-- name: "Uninstall {{ vault_vars.container.name }} on podman"
+- name: "Uninstall {{ openbao_vars.container.name }} on podman"
   when: platform == "podman"
   block:
 
     # Check if container is present
     - name: Check if container is present
       containers.podman.podman_container_info:
-        name: "{{ vault_vars.container.name }}"
+        name: "{{ openbao_vars.container.name }}"
       register: pod_info
       ignore_errors: true
 
     # Remove container
-    - name: "Remove container {{ vault_vars.container.name }}"
+    - name: "Remove container {{ openbao_vars.container.name }}"
       containers.podman.podman_container:
-        name: "{{ vault_vars.container.name }}"
+        name: "{{ openbao_vars.container.name }}"
         state: absent
       when: pod_info is defined
 
@@ -80,12 +80,12 @@
 #########################################################
 
 # Start destroy_volumes from podman role
-- name: "Destroy container data folders for {{ vault_vars.container.name }}..."
+- name: "Destroy container data folders for {{ openbao_vars.container.name }}..."
   ansible.builtin.include_role:
     name: podman
   vars:
     action: destroy_volumes
-    container_volumes: "{{ vault_vars.container.volumes }}"
+    container_volumes: "{{ openbao_vars.container.volumes }}"
   when:
     - platform == "podman"
     - keep_data == false

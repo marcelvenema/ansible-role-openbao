@@ -1,11 +1,11 @@
 ---
 
 #########################################################
-## Hashicorp Vault Administration module               ##
+## OpenBao Vault Administration module               ##
 #########################################################
 
-# Validate variables for Hashicorp Vault administration module.
-- name: Validate variables for Hashicorp Vault administration module...
+# Validate variables for OpenBao Vault administration module.
+- name: Validate variables for OpenBao Vault administration module...
   ansible.builtin.assert:
     that: "varitem is defined"
     fail_msg: "Required variable '{{ varitem }}' has not been provided."
