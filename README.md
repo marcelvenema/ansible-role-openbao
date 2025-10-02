@@ -38,14 +38,15 @@ This role uses the `openbao` variable for configuration parameters. See [default
 action: **install**<br>
 Installation of the latest version of OpenBao Vault.<br>
 variables:<br>
----
+<br>
+
 | variable | description |
----
+| :--- | :--- |
 | openbao | |
 | ├── containers | |
 |    ├── name | (optional) name of container. | 
 |    ├── repository_url | URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml |
-|  |  |
+| --- | --- |
 
 
 
