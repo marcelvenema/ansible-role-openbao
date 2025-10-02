@@ -2,12 +2,13 @@
 
 <table style="border:0px; width:100%"><tr><td width=160px valign=top><img src="media/icon_openbao.png" alt="OpenBao icon" width=128 height=128></td>
 <td>
-Ansible role for installation, configuration, usage, and management of OpenBao Vault.<br>OpenBao Vault is a tool for securely accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, certificates, and more. Vault provides a unified interface to any secret while providing tight access control and recording a detailed audit log.<br>OpenBao is an open source, community driven fork of Hashicorp Vault.<br>Official website: `https://openbao.org/`<br><br>
+Ansible role for installation, configuration, usage, and management of OpenBao Vault.<br>OpenBao Vault is a tool for securely accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, certificates, and more. OpenBao Vault provides a unified interface to any secret while providing tight access control and recording a detailed audit log. OpenBao is an open source, community driven fork of Hashicorp Vault.<br>Official website: `https://openbao.org/`<br><br>
 </td>
 </tr></table>
 
 Ansible role OpenBao : [Design](docs/DESIGN.md)  |  [Administration](docs/ADMINISTRATION.md)  |  [Examples](examples)  |  [Test](molecule)  |  [Issues]()  |<br>
-Latest release: <kbd>R1</kbd> - See [RELEASES](docs/RELEASES.md) for more information.<br>
+<br>
+Latest version: <kbd>R1</kbd> - See [RELEASES](docs/RELEASES.md) for more information.<br>
 
 # Role variables
 Available variables are listed below, along with default values (see `defaults/main.yml`):<br>
@@ -16,7 +17,7 @@ Available variables are listed below, along with default values (see `defaults/m
 # Actions summary:
 
 <table style="border:0px; width:100%">
-  <tr><th><a href="#Deployment">Deployment</a></th><th><a href="#Secrets-Management">Secrets Managements</a></th><th><a href="#Secret-Engines">Secret Engines</a></th><th><a href="#Policies">Policies</a></th><th><a href="#AppRoles">AppRoles</a></th><th><a href="#Administration">Administration</a></th></tr>
+  <tr><th><a href="#Deployment">Deployment</a></th><th><a href="#Secrets-Management">Secrets Management</a></th><th><a href="#Secret-Engines">Secret Engines</a></th><th><a href="#Policies">Policies</a></th><th><a href="#AppRoles">AppRoles</a></th><th><a href="#Administration">Administration</a></th></tr>
   <tr>
     <td valign=top>install<br>configure<br>uninstall<br>update<br></td>
     <td valign=top>create_secret<br>destroy_secret<br>get_secret<br>import_secret<br>export_secret<br></td>
@@ -37,11 +38,23 @@ This role uses the `openbao` variable for configuration parameters. See [default
 action: **install**<br>
 Installation of the latest version of OpenBao Vault.<br>
 variables:<br>
-<kbd>vault_repository_url</kbd> : URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/hashicorp/vault', '/tmp/vault.tar', 'https://192.168.1.1/repo/vault1.14.tar'. By default, it points to docker.io/hashicorp/vault via defaults/main.yml.<br>
-<kbd>vault_repository_tag (optional)</kbd> : Release or version number of the image. Default is 'latest'.<br>
-<kbd>vault_repository_checksum (optional)</kbd> : Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
-<kbd>vault_repository_checksum_algorithm (optional)</kbd> : Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
-<kbd>platform (optional)</kbd>  : Install on a specific platform, for example, podman, kubernetes, host. Default is autodetect. (podman, kubernetes, host)<br>
+---
+| variable | description |
+---
+| openbao | |
+| ├── containers | |
+|    ├── name | (optional) name of container. | 
+|    ├── repository_url | URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml |
+|  |  |
+
+
+
+openbao:
+<kbd>repository_url</kbd> : .<br>
+<kbd>repository_tag (optional)</kbd> : Release or version number of the image. Default is 'latest'.<br>
+<kbd>repository_checksum (optional)</kbd> : Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
+<kbd>repository_checksum_algorithm (optional)</kbd> : Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
+<kbd>platform (optional)</kbd>  : Install on a specific platform, for example, podman, kubernetes, host. Default is podman-. (podman, kubernetes, host)<br>
 <kbd>uninstall (optional)</kbd> : true/false. When true, uninstall is started before installation.<br>
 
 ```
