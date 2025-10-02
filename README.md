@@ -38,22 +38,10 @@ This role uses the `openbao` variable for configuration parameters. See [default
 action: **install**<br>
 Installation of the latest version of OpenBao Vault.<br>
 variables:<br>
-<br>
-
-| variable | description |
-| :--- | :--- |
-| openbao | |
-| ├── containers | |
-|    ├── name | (optional) name of container. | 
-|    ├── repository_url | URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml |
-| --- | --- |
-
-
-
-openbao:
-<kbd>repository_url</kbd> : .<br>
-<kbd>repository_tag (optional)</kbd> : Release or version number of the image. Default is 'latest'.<br>
-<kbd>repository_checksum (optional)</kbd> : Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
+<kbd>openbao - container - name</kbd> : (optional) Name of container. Default is 'openbao'.<br>
+<kbd>openbao - container - repository_url</kbd> - URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
+<kbd>openbao - container - repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
+<kbd>openbao - container - repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
 <kbd>repository_checksum_algorithm (optional)</kbd> : Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
 <kbd>platform (optional)</kbd>  : Install on a specific platform, for example, podman, kubernetes, host. Default is podman-. (podman, kubernetes, host)<br>
 <kbd>uninstall (optional)</kbd> : true/false. When true, uninstall is started before installation.<br>
@@ -62,12 +50,12 @@ openbao:
 - name: Install HashiCorp Vault
     hosts: vault-server
     roles:
-     - role: vault
+     - role: openbao
          vars:
              action: install
-             vault:
+             openbao:
                container:
-                 repository_url: docker.io/hashicorp/vault
+                 repository_url: docker.io/openbao/openbao
 
 ```
 
