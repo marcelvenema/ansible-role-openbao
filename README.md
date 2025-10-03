@@ -8,7 +8,7 @@ Ansible role for installation, configuration, usage, and management of OpenBao V
 
 Ansible role OpenBao : [Design](docs/DESIGN.md)  |  [Administration](docs/ADMINISTRATION.md)  |  [Examples](examples)  |  [Test](molecule)  |  [Issues]()  |<br>
 <br>
-Latest version: <kbd>R1</kbd> - See [RELEASES](docs/RELEASES.md) for more information.<br>
+Latest version: <kbd>v0.4.1</kbd> - See [RELEASES](docs/RELEASES.md) for more information.<br>
 
 # Role variables
 Available variables are listed below, along with default values (see `defaults/main.yml`):<br>
@@ -85,6 +85,10 @@ variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
 <kbd>secret_name</kbd> : unique identification of OpenBao instance, for example server name/cluster name. Will be used to get/put parameters in Vault.<br>
+<kbd>openbao - container - repository_url</kbd> - (optional) URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
+<kbd>openbao - container - repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
+<kbd>openbao - container - repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
+<kbd>openbao - container - repository_checksum_algorithm</kbd> : (optional) Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
 
 ```
 - name: Update OpenBao Vault
@@ -115,11 +119,13 @@ or:
 ## Secrets Management
 
 action: **create_secret**<br>
-Create a secret in Vault.<br>
+_Create a secret in Vault_.<br>
+This action will create a secret in OpenBao Vault. It securely stores sensitive information—such as passwords, API keys, or certificates—within the Vault instance. The secret is saved under the specified secret engine and name, using key-value pairs provided in the configuration. This ensures that only authorized users and applications can access or manage the secret, supporting secure automation and compliance requirements.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
 <kbd>secret_engine_name</kbd> : name of secret engine.<br>
+<kbd>secret_name</kbd> : unique identification of OpenBao instance, for example server name/cluster name. Will be used to get/put parameters in Vault.<br>
 <kbd>secret_value</kbd> : Path where the secret will be stored.<br> 
 <kbd>secret_keyvalue</kbd> : Data of the secret in key-value pairs.<br>
 
@@ -133,16 +139,19 @@ variables:<br>
              vault_address: http://localhost:8200
              vault_token: <token>
              secret_engine_name: nexus-repository
-             secret_value: server-nexus
+             secret_name: 10-233-0-101
              secret_keyvalue: "{ "username":"administrator", "password":"password123"}
+
 ```
 
 action: **destroy_secret**<br>
-Delete a secret from Vault. `ROADMAP`<br>
+_Delete a secret from Vault_. `ROADMAP`<br>
+This action will delete a secret from the Vault.
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
 <kbd>secret_engine_name</kbd> : Path where the secret is stored.<br>
+<kbd>secret_value</kbd> : Path where the secret will be stored.<br> 
 
 ```
 - name: Destroy secret from Vault
