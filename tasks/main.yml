@@ -1,30 +1,10 @@
 ---
-
 #########################################################
 ## Main module for OpenBao Ansible role                ##
 #########################################################
 
-# Show message
-- name: Show action message
-  ansible.builtin.debug:
-    msg: "Starting role {{ role_name }}... action: {{ action }}."
-
-# If action variable is not defined, gather status of the service and set action variable
-- name: Gather action variable status...
-  ansible.builtin.include_tasks: set_action.yml
-  when: action is not defined
-
-# Assert that action is in actions
-- name: "Verify valid action ({{ action }})..."
-  ansible.builtin.assert:
-    that:
-      - action in (actions | map('dict2items') | map('first') | map(attribute='key') | list)
-    fail_msg: "The action '{{ action }}' is not in the list of valid actions..."
-    quiet: true
-
-# Merge role defaults with vault, include nested variables
-# Nested merge does not work well due to Ansible issue (see https://github.com/ansible/ansible/issues/32499), so use workaround to combine variables
-- name: Gather defaults (vault)...
+# Merge role defaults early so subsequent tasks can rely on openbao_vars
+- name: Gather defaults (openbao)...
   ansible.builtin.include_vars:
     file: "{{ role_path }}/defaults/main.yml"
     name: openbao_defaults
@@ -32,7 +12,25 @@
 # Merge role defaults, include nested variables
 - name: Merge role defaults with collected variables...
   ansible.builtin.set_fact:
-    openbao_vars: "{{ openbao_defaults.openbao | combine( openbao | default({}), recursive=true ) }}"
+    openbao_vars: "{{ openbao_defaults.openbao | combine(openbao | default({}), recursive=true) }}"
+
+# If action variable is not defined, gather status of the service and set action variable
+- name: Gather action variable status...
+  ansible.builtin.include_tasks: set_action.yml
+  when: action is not defined
+
+# Show message
+- name: Show action message
+  ansible.builtin.debug:
+    msg: "Starting role {{ role_name }}... action: {{ action }}."
+
+# Assert that action is in actions
+- name: Verify valid action ({{ action }})...
+  ansible.builtin.assert:
+    that:
+      - action in (actions | map('dict2items') | map('first') | map(attribute='key') | list)
+    fail_msg: The action '{{ action }}' is not in the list of valid actions...
+    quiet: true
 
 # TODO: Implement Kafka publishing here
 - name: Publish message to Kafka bus...

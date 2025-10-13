@@ -1,5 +1,4 @@
 ---
-
 #########################################################
 ## Pre-configuration                                   ##
 #########################################################
@@ -7,12 +6,12 @@
 # Validate variables
 - name: Validate required variables for action.
   ansible.builtin.assert:
-    that: "varitem is defined"
-    fail_msg: "Required variable '{{ varitem }}' has not been provided."
+    that: varitem is defined
+    fail_msg: Required variable '{{ varitem }}' has not been provided.
     quiet: true
   loop_control:
     loop_var: varitem
-  loop: 
+  loop:
     - vault_address
 
 # Check if Hashicorp Vault is not initialized via api, get content string and register as vault_init_status
@@ -21,14 +20,14 @@
     url: "{{ vault_address }}/v1/sys/init"
     validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
     method: GET
-    return_content: yes
+    return_content: true
   register: vault_init_status
   ignore_errors: true
 
 # Get content string from response
 - name: Register variable (vault_init_status)...
   ansible.builtin.set_fact:
-    vault_init_status: "{{ vault_init_status.content }}"
+    vault_init_status: "{{ (vault_init_status.content | default('{}')) | from_json }}"
 
 #########################################################
 ## Initialization                                      ##
@@ -36,9 +35,8 @@
 
 # Initialize Vault 
 - name: Initialize Vault server...
-  when: vault_init_status.initialized == false
+  when: not (vault_init_status.initialized | default(false))
   block:
-    
     # Initialize Vault, create unseal keys and root token
     - name: Initialize Vault server...
       ansible.builtin.uri:
@@ -49,7 +47,7 @@
         body:
           secret_shares: 5
           secret_threshold: 2
-      register: vault_init_results 
+      register: vault_init_results
 
     # Save Vault root token and unseal keys
     - name: Save Vault root token and unseal keys...
@@ -60,34 +58,37 @@
     # Create temp folder for root token and unseal keys
     - name: Create temporary folder...
       ansible.builtin.file:
-        path: "/tmp/vault"
+        path: /tmp/vault
         state: directory
+        mode: "0700"
 
     # Save Vault root token to file
     - name: Save Vault root token to file...
       ansible.builtin.copy:
         content: "{{ vault_token }}"
-        dest: "/tmp/vault/vault_token"
+        dest: /tmp/vault/vault_token
+        mode: "0600"
 
     # Save Vault unseal keys to file
     - name: Save Vault unseal keys to file...
       ansible.builtin.copy:
         content: "{{ vault_unseal_keys }}"
-        dest: "/tmp/vault/vault_unseal_keys"
+        dest: /tmp/vault/vault_unseal_keys
+        mode: "0600"
 
     # Copy root token and unseal keys to podman volume
     - name: Copy root token and unseal keys to podman volume...
       ansible.builtin.include_role:
         name: podman
-      vars: 
-        action: "copy_to_volume"
-        volume_source_folder: "/tmp/vault"
-        volume_destination_folder: "/vault/config"
+      vars:
+        action: copy_to_volume
+        volume_source_folder: /tmp/vault
+        volume_destination_folder: /vault/config
 
     # Delete temp folder
     - name: Delete temporary folder...
       ansible.builtin.file:
-        path: "/tmp/vault"
+        path: /tmp/vault
         state: absent
 
 #########################################################
@@ -101,8 +102,8 @@
 # Unseal Vault
 - name: Unseal Vault...
   ansible.builtin.include_tasks: unseal.yml
-  vars: 
-    action: "unseal"
+  vars:
+    action: unseal
 
 #########################################################
 ## Authentication                                      ##
@@ -112,29 +113,29 @@
 - name: Enable OpenBao Vault AppRole...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/auth/approle"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}" 
+    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
     method: POST
-    status_code: 204
+    status_code: 204,400
     headers:
-      X-Vault-Token: "{{ vault_token }}"     
+      X-Vault-Token: "{{ vault_token }}"
     body_format: json
     body:
-      type: "approle"
-      description: "AppRole authentication method for applications"
+      type: approle
+      description: AppRole authentication method for applications
 
 # Enable Vault username and password
 - name: Enable OpenBao Vault Username & Password...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/auth/userpass"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}" 
+    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
     method: POST
-    status_code: 204
+    status_code: 204,400
     headers:
-      X-Vault-Token: "{{ vault_token }}"     
+      X-Vault-Token: "{{ vault_token }}"
     body_format: json
     body:
-      type: "approle"
-      description: "Username and password authentication"
+      type: userpass
+      description: Username and password authentication
 
 #########################################################
 ## Enable services                                     ##
@@ -144,15 +145,15 @@
 - name: Enable OpenBao Vault PKI Secrets Engine...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/mounts/pki"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}" 
+    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
     method: POST
-    status_code: 204
+    status_code: 204,400
     headers:
-      X-Vault-Token: "{{ vault_token }}"     
+      X-Vault-Token: "{{ vault_token }}"
     body_format: json
     body:
-      type: "pki"
-      description: "PKI secrets engine for certificates"
+      type: pki
+      description: PKI secrets engine for certificates
 
 #########################################################
 ## Configure Vault                                     ##
@@ -166,7 +167,6 @@
 #########################################################
 
 # Unset variables
-- name: Unset variables...
-  ansible.builtin.set_fact:
-    vault_init_status: null
-    vault_init_results: null
+# - name: Unset variables...
+#   ansible.builtin.set_fact:
+#     vault_init_status: null

@@ -1,5 +1,4 @@
 ---
-
 #########################################################
 ## Set action                                          ##
 #########################################################
@@ -13,24 +12,28 @@
     manager: auto
 
 # Podman is installed
-- name: detected Podman package...
+- name: Detected Podman package...
   when: '"podman" in ansible_facts.packages'
   block:
-
     # List containers with containers.podman collection
     - name: Gather containers from podman...
-      community.general.containers_podman_container_info:
-        name: "{{ openbao_vars.container.name }}"
-      register: podman_containers   
+      containers.podman.podman_container_info:
+        name: "{{ openbao_vars.container.name | default('openbao') }}"
+      register: podman_containers
+      failed_when: false
 
     # Set action variable to start if container is not running
     - name: Set variable (action)...
-      set_fact:
-        action: "start"
-      when: '"Exited" in podman_containers.stdout_lines'
+      ansible.builtin.set_fact:
+        action: start
+      when:
+        - podman_containers.containers is defined
+        - podman_containers.containers | length > 0
+        - podman_containers.containers[0].State.Status is defined
+        - podman_containers.containers[0].State.Status != 'running'
 
     # Set action variable to install if container is not installed
     - name: Set variable (action)...
-      set_fact:
-        action: "install"
-      when: '" {{ openbao_vars.container.name }} " not in podman_containers.stdout_lines'
+      ansible.builtin.set_fact:
+        action: install
+      when: podman_containers.containers is not defined or (podman_containers.containers | length) == 0

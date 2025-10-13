@@ -1,5 +1,4 @@
 ---
-
 #########################################################
 ## Update                                              ##
 #########################################################
@@ -8,13 +7,10 @@
 ## Pre-installation platform check                     ##
 #########################################################
 
-# Determine platform
-- name: Determine platform for installation...
-  ansible.builtin.include_role:
-    name: server-config
-  vars:
-    action: "platform_check"
-  register: platform
+# Determine platform from vars (default podman)
+- name: Set platform variable
+  ansible.builtin.set_fact:
+    platform: "{{ openbao_vars.container.platform | default('podman') }}"
 
 #########################################################
 ## Update via podman                                   ##
@@ -23,14 +19,13 @@
 - name: Update Vault on podman
   when: platform == "podman"
   block:
-
     # Update podman container
     - name: Update Podman container...
       ansible.builtin.include_role:
         name: podman
       vars:
-        action: "update_container"
-        container_name: "{{openbao_vars.container.name}}"
+        action: update_container
+        container_name: "{{ openbao_vars.container.name }}"
         container_repository_url: "{{ openbao_vars.container.repository_url }}"
 
 #########################################################

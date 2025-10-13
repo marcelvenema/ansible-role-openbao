@@ -1,5 +1,4 @@
 ---
-
 #########################################################
 ## Unseal                                              ##
 #########################################################
@@ -7,8 +6,8 @@
 # Validate variables
 - name: Validate variables for action.
   ansible.builtin.assert:
-    that: "varitem is defined"
-    fail_msg: "Required variable '{{ varitem }}' has not been provided."
+    that: varitem is defined
+    fail_msg: Required variable '{{ varitem }}' has not been provided.
     quiet: true
   loop_control:
     loop_var: varitem
@@ -52,4 +51,4 @@
 # Unset variables
 - name: Unset variables...
   ansible.builtin.set_fact:
-    vault_health_response: null
+    vault_health_response:

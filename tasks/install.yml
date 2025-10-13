@@ -1,5 +1,4 @@
 ---
-
 #########################################################
 ## OpenBao install action                              ##
 #########################################################
@@ -11,17 +10,15 @@
 # Run uninstall if uninstall is set
 - name: Run uninstall playbook if set
   ansible.builtin.include_tasks: uninstall.yml
-  ignore_errors: true
-  when: openbao_vars.container.uninstall == true
+  when: openbao_vars.container.uninstall | default(false)
 
 #########################################################
 ## Installation on podman                              ##
 #########################################################
 
-- name: "Install {{ role_container_name }} container on podman..."
+- name: Install {{ role_container_name }} container on podman...
   when: openbao_vars.container.platform == "podman"
   block:
-
     # Gather installed packages
     - name: Gather installed packages
       ansible.builtin.package_facts:
@@ -31,7 +28,7 @@
     - name: Gather information (podman)...
       ansible.builtin.assert:
         that: '"podman" in ansible_facts.packages'
-        fail_msg: "Podman is not installed. Please install Podman first. Cannot continue..."
+        fail_msg: Podman is not installed. Please install Podman first. Cannot continue...
 
     #####################################################
     ## Volume configuration                            ##
@@ -53,15 +50,16 @@
     # Create temp folder for SSL certificate
     - name: Create temporary folder...
       ansible.builtin.file:
-        path: "/tmp/vault/certs"
+        path: /tmp/vault/certs
         state: directory
+        mode: "0700"
 
     # Create SSL certificate
     - name: Create SSL certificate for OpenBao...
       ansible.builtin.include_tasks:
         file: create_ssl_certificate.yml
       vars:
-        destination_folder: "/tmp/vault/certs"
+        destination_folder: /tmp/vault/certs
 
     # Copy SSL certificate to container
     - name: Copy SSL certificate to container volume...
@@ -69,14 +67,14 @@
         name: podman
       vars:
         action: copy_to_volume
-        volume_source_folder: "/tmp/vault/certs/"
-        volume_destination_folder: "/vault/config"
+        volume_source_folder: /tmp/vault/certs/
+        volume_destination_folder: /vault/config
         volume_mode: "0777"
 
     # Delete temp folder
     - name: Delete temporary folder...
       ansible.builtin.file:
-        path: "/tmp/vault/certs"
+        path: /tmp/vault/certs
         state: absent
 
     #####################################################
@@ -86,14 +84,15 @@
     # Create temp folder for configuration file
     - name: Create temporary folder...
       ansible.builtin.file:
-        path: "/tmp/vault"
+        path: /tmp/vault
         state: directory
+        mode: "0700"
 
     # Create configuration file
     - name: Create Hashicorp Vault configuration file...
       ansible.builtin.template:
         src: ./templates/vault.podman_config.hcl.j2
-        dest: "/tmp/vault/vault.hcl"
+        dest: /tmp/vault/vault.hcl
 
     # Copy configuration file to container
     - name: Copy configuration file to container...
@@ -101,14 +100,14 @@
         name: podman
       vars:
         action: copy_to_volume
-        volume_source_folder: "/tmp/vault/"
-        volume_destination_folder: "/vault/config"
+        volume_source_folder: /tmp/vault/
+        volume_destination_folder: /vault/config
         volume_mode: "0777"
 
     # Delete temp folder
     - name: Delete temporary folder...
       ansible.builtin.file:
-        path: "/tmp/vault"
+        path: /tmp/vault
         state: absent
 
     #####################################################
@@ -119,17 +118,18 @@
     - name: Open firewall ports...
       become: true
       ansible.posix.firewalld:
-        port: "{{ openbao_vars.container.ports[0].split(':')[0] }}/tcp"
+        port: "{{ (item.split(':')[0]) }}/tcp"
         permanent: true
         state: enabled
         immediate: true
+      loop: "{{ openbao_vars.container.ports | default([]) }}"
 
     #####################################################
     ## Import container                                ##
     #####################################################
 
     # Import container
-    - name: "Install {{ openbao_vars.container.name }} container on podman"
+    - name: Install {{ openbao_vars.container.name }} container on podman
       ansible.builtin.include_role:
         name: podman
       vars:
@@ -141,8 +141,8 @@
         container_name: "{{ openbao_vars.container.name }}"
         container_ports: "{{ openbao_vars.container.ports }}"
         container_volumes: "{{ openbao_vars.container.volumes }}"
-        container_command: "vault server -config=/vault/config/vault.hcl"
-        container_security_opt: ["label=disable"]
+        container_command: vault server -config=/vault/config/vault.hcl
+        container_security_opt: [label=disable]
         container_cap_add: IPC_LOCK
         container_env: "{{ openbao_vars.container.environment | default(omit) }}"
         container_healthcheck: "{{ openbao_vars.container.healthcheck | default(omit) }}"
@@ -159,7 +159,7 @@
 # Get ip address
 - name: Register variable (vault_address)...
   ansible.builtin.set_fact:
-    vault_address: "https://{{ ansible_default_ipv4.address }}:{{ openbao_vars.container.ports[0].split(':')[0] }}"
+    vault_address: https://{{ ansible_default_ipv4.address }}:{{ openbao_vars.container.ports[0].split(':')[0] }}
 
 # Configure OpenBao
 - name: Configure application

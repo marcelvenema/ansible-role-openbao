@@ -1,5 +1,4 @@
 ---
-
 #########################################################
 ## OpenBao Vault Policies module                       ##
 #########################################################
@@ -7,12 +6,12 @@
 # Validate global variables
 - name: Validate global variables for OpenBao Vault policies module.
   ansible.builtin.assert:
-    that: "varitem is defined"
-    fail_msg: "Required variable '{{ varitem }}' has not been provided."
+    that: varitem is defined
+    fail_msg: Required variable '{{ varitem }}' has not been provided.
     quiet: true
   loop_control:
     loop_var: varitem
-  loop: 
+  loop:
     - vault_address
     - vault_token
 
@@ -23,7 +22,6 @@
 - name: Get Vault policy
   when: action == "get_policy"
   block:
-
     # Register var_result variable
     - name: Register var_result variable
       ansible.builtin.set_fact:
@@ -41,18 +39,18 @@
     - name: Validate variables for Vault get_policy action.
       ansible.builtin.assert:
         that: "{{ varitem }} is defined"
-        fail_msg: "Required variable '{{ varitem }}' has not been provided."
+        fail_msg: Required variable '{{ varitem }}' has not been provided.
         quiet: true
       loop_control:
         loop_var: varitem
-      loop: 
+      loop:
         - vault_policy_name
         - vault_policy_rules
 
     # Show information message
-    - name: "This part is not (yet) implemented."
+    - name: This part is not (yet) implemented.
       ansible.builtin.debug:
-        msg: "This part is not (yet) implemented."
+        msg: This part is not (yet) implemented.
 
     # Stop playbook
     - name: Stop playbook
@@ -65,16 +63,15 @@
 - name: Create Vault policy
   when: action == "create_policy"
   block:
-
     # Validate local variables
     - name: Validate variables for Vault create_policy action.
       ansible.builtin.assert:
         that: "{{ varitem }} is defined"
-        fail_msg: "Required variable '{{ varitem }}' has not been provided."
+        fail_msg: Required variable '{{ varitem }}' has not been provided.
         quiet: true
       loop_control:
         loop_var: varitem
-      loop: 
+      loop:
         - vault_policy_name
         - vault_policy_rules
 
@@ -82,11 +79,11 @@
     - name: Create OpenBao Vault policy
       ansible.builtin.uri:
         url: "{{ vault_address }}/v1/sys/policies/acl/{{ vault_policy_name }}_policy"
-        validate_certs: "{{ openbao_vars.application.validate_certs }}" 
+        validate_certs: "{{ openbao_vars.application.validate_certs }}"
         method: PUT
         status_code: 204
         headers:
-          X-Vault-Token: "{{ vault_token }}"     
+          X-Vault-Token: "{{ vault_token }}"
         body_format: json
         body:
           policy: "{{ vault_policy_rules }}"
@@ -95,11 +92,11 @@
     - name: Associate Vault policy to AppRole
       ansible.builtin.uri:
         url: "{{ vault_address }}/v1/auth/approle/role/{{ vault_policy_name }}_role"
-        validate_certs: "{{ openbao_vars.application.validate_certs }}" 
+        validate_certs: "{{ openbao_vars.application.validate_certs }}"
         method: POST
         status_code: 204
         headers:
-          X-Vault-Token: "{{ vault_token }}"     
+          X-Vault-Token: "{{ vault_token }}"
         body_format: json
         body:
           policies: ["{{ vault_policy_name }}_policy"]
@@ -111,7 +108,6 @@
 - name: Destroy Vault policy
   when: action == "destroy_policy"
   block:
-
     # Register var_result variable
     - name: Register var_result variable
       ansible.builtin.set_fact:
@@ -123,18 +119,18 @@
     - name: Validate variables for Vault destroy_policy action.
       ansible.builtin.assert:
         that: "{{ varitem }} is defined"
-        fail_msg: "Required variable '{{ varitem }}' has not been provided."
+        fail_msg: Required variable '{{ varitem }}' has not been provided.
         quiet: true
       loop_control:
         loop_var: varitem
-      loop: 
+      loop:
         - vault_policy_name
         - vault_policy_rules
 
     # Show information message
-    - name: "This part is not (yet) implemented."
+    - name: This part is not (yet) implemented.
       ansible.builtin.debug:
-        msg: "This part is not (yet) implemented."
+        msg: This part is not (yet) implemented.
 
     # Stop playbook
     - name: Stop playbook
