@@ -36,18 +36,21 @@ openbao:
     platform: podman
     # uninstall indicates if the container should be uninstalled. example: true or false. Default is false.
     uninstall: false
-    # repository_url can be a URL to a docker image or a tar file. example: "https://docker.io/sonatype/nexus3" or "/tmp/nexus3.67.1.tar", "https://192.168.1.1/repo/nexus.tar".
+    # repository_url can be a URL to a docker image or a tar file. example: "https://docker.io/sonatype/nexus3"
+    # or "/tmp/nexus3.67.1.tar", "https://192.168.1.1/repo/nexus.tar".
     repository_url: docker.io/openbao/openbao
     # repository_tag is a tag of the image or a version of the tar file. example: "3.67.1" or "latest" Default is "latest".
     repository_tag: 2.4.1
-    # repository_checksum can be a checksum of the container file. example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".
+    # repository_checksum can be a checksum of the container file. example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+    # or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".
     # repository_checksum: ""
     # repository_checksum_algorithm can be a checksum algorithm of the container file. example: "sha256", sha512", "md5".
     # repository_checksum_algorithm: "sha256"
     # ports is a list of ports used in the container. example: ["8200:8200"] or ["8200:8200", "8201:8201"].
     ports:
       - 8200:8200
-    # volumes is a list of volumes used in the container. example: ["vault/config:/vault/config:Z"] or ["vault/config:/vault/config:Z", "vault/file:/vault/file:Z"].
+    # volumes is a list of volumes used in the container. example: ["vault/config:/vault/config:Z"] or
+    # ["vault/config:/vault/config:Z", "vault/file:/vault/file:Z"].
     volumes:
       - vault/logs:/vault/logs:Z
       - vault/file:/vault/file:Z
@@ -57,6 +60,14 @@ openbao:
     # environment is a list of environment variables used in the container.
     environment:
       SKIP_SETCAP: true
+    # privileged indicates if the container should be run in privileged mode. example: true or false. Default is false.
+    privileged: false
+    # cap_add is a list of capabilities to add to the container. example: ["SYS_ADMIN", "NET_ADMIN"].
+    cap_add: IPC_LOCK
+    # cap_drop is a list of capabilities to drop from the container. example: ["MKNOD"].
+    # cap_drop: 
+    # user is the user to run the container as. example: "1000:
+    # user: "1000:1000"
     # healthcheck is the command used to check if the container is healthy. example: "curl -f http://localhost:8080/health || exit 1".
     healthcheck: wget --no-check-certificate -qO- https://127.0.0.1:8200/v1/sys/health || exit 1
     # healthcheck_start is the time to wait before starting the health check. example: "30s".
@@ -68,7 +79,8 @@ openbao:
     # healthcheck_retries is the number of retries for the health check. example: "3".
     healthcheck_retries: 5
 
-  # quadlet_options is a list of options used in the container. example: ["Environment=NODE_ENV=production", "HealthCmd='wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1 '"].
+  # quadlet_options is a list of options used in the container.
+  # example: ["Environment=NODE_ENV=production", "HealthCmd='wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1 '"].
   # quadlet_options:
 
   # secrets contains the configuration for the vault used for storing secrets and configuration data.
@@ -77,5 +89,6 @@ openbao:
     secret_name: "{{ ansible_fqdn | replace('.', '-') }}"
     # secret_engine_name is the name of the vault used for storing secrets and configuration data. example: "nexus-repository".
     secret_engine_name: openbao-vault
-    # <container_name>_secret_engine_description is the description of the vault used for storing secrets and configuration data. example: "Secrets for Sonatype Nexus Repository.".
+    # <container_name>_secret_engine_description is the description of the vault used for storing secrets and configuration data.
+    # example: "Secrets for Sonatype Nexus Repository.".
     secret_engine_description: Secrets for OpenBao Vault secret management.

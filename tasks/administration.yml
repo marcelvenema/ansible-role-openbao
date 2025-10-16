@@ -19,7 +19,7 @@
 ## Start service                                       ##
 #########################################################
 
-- name: start action...
+- name: Start action...
   when: action == "start"
   block:
     # Show information message
@@ -35,7 +35,7 @@
 ## Stop service                                        ##
 #########################################################
 
-- name: stop action...
+- name: Stop action...
   when: action == "stop"
   block:
     # Show information message

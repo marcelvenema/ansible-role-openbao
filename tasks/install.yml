@@ -143,8 +143,11 @@
         container_volumes: "{{ openbao_vars.container.volumes }}"
         container_command: vault server -config=/vault/config/vault.hcl
         container_security_opt: [label=disable]
-        container_cap_add: IPC_LOCK
         container_env: "{{ openbao_vars.container.environment | default(omit) }}"
+        container_privileged: "{{ openbao_vars.container.privileged | default(false) }}"
+        container_cap_add: "{{ openbao_vars.container.cap_add | default(omit) }}"
+        container_cap_drop: "{{ openbao_vars.container.cap_drop | default(omit) }}"
+        container_user: "{{ openbao_vars.container.user | default(omit) }}"
         container_healthcheck: "{{ openbao_vars.container.healthcheck | default(omit) }}"
         container_healthcheck_fail: "{{ openbao_vars.container.healthcheck_fail | default('none') }}"
         container_healthcheck_retries: "{{ openbao_vars.container.healthcheck_retries | default(omit) }}"
