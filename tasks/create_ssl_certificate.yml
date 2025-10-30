@@ -19,7 +19,7 @@
 # Run command
 - name: Create SSL certificate
   ansible.builtin.command:
-    cmd: openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 -extensions v3_ca -keyout {{ destination_folder }}/private.key -out {{ 
+    cmd: openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 -extensions v3_ca -keyout {{ destination_folder }}/private.key -out {{
       destination_folder }}/public.crt -subj '{{ ssl_subject }}' -addext '{{ ssl_extensions }}'
   register: action_result
   args:

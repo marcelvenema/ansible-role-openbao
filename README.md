@@ -80,7 +80,7 @@ variables:<br>
 
 action: **update**<br>
 _Update to the latest OpenBao Vault version_.<br>
-This action will update the current OpenBao Vault server to a newer version. By default, it reads the `repository_url` configured in Vault and attempts to download and install the latest available version. If a specific `repository_url` is provided, the update will use that source instead. The update process ensures that the Vault service is upgraded safely, minimizing downtime and preserving existing configuration and data. Use this action to keep your OpenBao Vault deployment up to date with the latest features and security patches.  
+This action will update the current OpenBao Vault server to a newer version. By default, it reads the `repository_url` configured in Vault and attempts to download and install the latest available version. If a specific `repository_url` is provided, the update will use that source instead. The update process ensures that the Vault service is upgraded safely, minimizing downtime and preserving existing configuration and data. Use this action to keep your OpenBao Vault deployment up to date with the latest features and security patches.
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
@@ -126,7 +126,7 @@ variables:<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
 <kbd>secret_engine_name</kbd> : name of secret engine.<br>
 <kbd>secret_name</kbd> : unique identification of OpenBao instance, for example server name/cluster name. Will be used to get/put parameters in Vault.<br>
-<kbd>secret_value</kbd> : Path where the secret will be stored.<br> 
+<kbd>secret_value</kbd> : Path where the secret will be stored.<br>
 <kbd>secret_keyvalue</kbd> : Data of the secret in key-value pairs.<br>
 
 ```
@@ -151,7 +151,7 @@ variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
 <kbd>secret_engine_name</kbd> : Path where the secret is stored.<br>
-<kbd>secret_value</kbd> : Path where the secret will be stored.<br> 
+<kbd>secret_value</kbd> : Path where the secret will be stored.<br>
 
 ```
 - name: Destroy secret from Vault
@@ -194,7 +194,7 @@ variables:<br>
 action: **export_secrets**<br>
 Export secrets from Vault to file.<br>
 This action will get secrets from the Vault and stores it into an encrypted file.<br>
-Use `secret_engine_name` and `secret_name` for single secret values. Use `secrets` for multiple secret values.<br> 
+Use `secret_engine_name` and `secret_name` for single secret values. Use `secrets` for multiple secret values.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
@@ -395,7 +395,7 @@ variables:<br>
 
 - **roadmap**<br>
     Vision and future developments.
-    See [roadmap](ROADMAP.md)<br>
+    See [roadmap](docs/ROADMAP.md)<br>
 
 ***
 
