@@ -20,7 +20,7 @@
 #########################################################
 
 - name: Get Vault policy
-  when: action == "get_policy"
+  when: action_type == "get_policy"
   block:
     # Register var_result variable
     - name: Register var_result variable
@@ -61,7 +61,7 @@
 #########################################################
 
 - name: Create Vault policy
-  when: action == "create_policy"
+  when: action_type == "create_policy"
   block:
     # Validate local variables
     - name: Validate variables for Vault create_policy action.
@@ -106,7 +106,7 @@
 #########################################################
 
 - name: Destroy Vault policy
-  when: action == "destroy_policy"
+  when: action_type == "destroy_policy"
   block:
     # Register var_result variable
     - name: Register var_result variable

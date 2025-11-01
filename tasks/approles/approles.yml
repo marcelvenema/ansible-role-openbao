@@ -20,7 +20,7 @@
 #########################################################
 
 - name: Get Vault AppRole
-  when: action == "get_approle"
+  when: action_type == "get_approle"
   block:
     # Register var_result variable
     - name: Register var_result variable
@@ -61,7 +61,7 @@
 #########################################################
 
 - name: Create Vault AppRole
-  when: action == "create_approle"
+  when: action_type == "create_approle"
   block:
     # Validate local variables
     - name: Validate variables for Vault reate_approle action.
@@ -89,7 +89,7 @@
 #########################################################
 
 - name: Destroy Vault AppRole
-  when: action == "destroy_approle"
+  when: action_type == "destroy_approle"
   block:
     # Validate local variables
     - name: Validate variables for Vault destroy_approle action.
