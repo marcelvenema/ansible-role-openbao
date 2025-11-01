@@ -35,7 +35,7 @@ This role uses the `openbao` variable for configuration parameters. See [default
 
 ### Deployment
 
-action: **install**<br>
+action_type: **install**<br>
 _Installation of the latest version of OpenBao Vault_.<br>
 This action will install the latest version of OpenBao Vault on the target hosts using the specified container image and configuration parameters. It ensures that the Vault service is set up and ready for use according to the provided variables.<br>
 variables:<br>
@@ -53,7 +53,7 @@ variables:<br>
     roles:
      - role: openbao
          vars:
-             action: install
+             action_type: install
              openbao:
                container:
                  repository_url: docker.io/openbao/openbao
@@ -61,7 +61,7 @@ variables:<br>
 ```
 
 
-action: **uninstall**<br>
+action_type: **uninstall**<br>
 _Uninstallation of OpenBao Vault_.<br>
 This action will remove the OpenBao Vault container from the target host, ensuring all associated services are stopped and the container is deleted. Use the `keep_data` variable to retain data folders if required.
 variables:<br>
@@ -73,12 +73,12 @@ variables:<br>
     roles:
      - role: openbao
          vars:
-             action: uninstall
+             action_type: uninstall
              keep_data: true
 ```
 
 
-action: **update**<br>
+action_type: **update**<br>
 _Update to the latest OpenBao Vault version_.<br>
 This action will update the current OpenBao Vault server to a newer version. By default, it reads the `repository_url` configured in Vault and attempts to download and install the latest available version. If a specific `repository_url` is provided, the update will use that source instead. The update process ensures that the Vault service is upgraded safely, minimizing downtime and preserving existing configuration and data. Use this action to keep your OpenBao Vault deployment up to date with the latest features and security patches.
 variables:<br>
@@ -96,7 +96,7 @@ variables:<br>
     roles:
      - role: openbao
          vars:
-             action: update
+             action_type: update
              vault_address: http://localhost:8200
              vault_token: <token>
              secret_name: 10-233-0-101
@@ -108,7 +108,7 @@ or:
     roles:
      - role: openbao
          vars:
-             action: update
+             action_type: update
              openbao:
                container:
                  repository_url: "https://<nexus repository>/repository/containers/openbao_2.4.1.tar"
@@ -118,7 +118,7 @@ or:
 
 ## Secrets Management
 
-action: **create_secret**<br>
+action_type: **create_secret**<br>
 _Create a secret in Vault_.<br>
 This action will create a secret in OpenBao Vault. It securely stores sensitive information—such as passwords, API keys, or certificates—within the Vault instance. The secret is saved under the specified secret engine and name, using key-value pairs provided in the configuration. This ensures that only authorized users and applications can access or manage the secret, supporting secure automation and compliance requirements.<br>
 variables:<br>
@@ -135,7 +135,7 @@ variables:<br>
     roles:
      - role: vault
          vars:
-             action: create_secret
+             action_type: create_secret
              vault_address: http://localhost:8200
              vault_token: <token>
              secret_engine_name: nexus-repository
@@ -144,7 +144,7 @@ variables:<br>
 
 ```
 
-action: **destroy_secret**<br>
+action_type: **destroy_secret**<br>
 _Delete a secret from Vault_. `ROADMAP`<br>
 This action will delete a secret from the Vault.
 variables:<br>
@@ -159,7 +159,7 @@ variables:<br>
     roles:
      - role: vault
          vars:
-             action: destroy_secret
+             action_type: destroy_secret
              vault_address: http://localhost:8200
              vault_token: <token>
              secret_engine_name: nexus-repository
@@ -167,7 +167,7 @@ variables:<br>
 ```
 
 
-action: **get_secret**<br>
+action_type: **get_secret**<br>
 Get a secret from Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -179,7 +179,7 @@ variables:<br>
 ```
 
 
-action: **import_secrets**<br>
+action_type: **import_secrets**<br>
 Import secret from file into Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -191,7 +191,7 @@ variables:<br>
 ```
 
 
-action: **export_secrets**<br>
+action_type: **export_secrets**<br>
 Export secrets from Vault to file.<br>
 This action will get secrets from the Vault and stores it into an encrypted file.<br>
 Use `secret_engine_name` and `secret_name` for single secret values. Use `secrets` for multiple secret values.<br>
@@ -238,7 +238,7 @@ variables:<br>
 
 ## Secret Engines
 
-action: **create_secret_engine**<br>
+action_type: **create_secret_engine**<br>
 Create secret engine in Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -265,7 +265,7 @@ variables:<br>
 ```
 
 
-action: **destroy_secret_engine**<br>
+action_type: **destroy_secret_engine**<br>
 Destroy secret engine in Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -279,7 +279,7 @@ variables:<br>
 
 ## Policies
 
-action: **create_policy**<br>
+action_type: **create_policy**<br>
 Create a policy in Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -293,7 +293,7 @@ variables:<br>
     roles:
      - role: vault
          vars:
-             action: create_policy
+             action_type: create_policy
              vault_address: http://localhost:8200
              vault_token: <token>
              policy_name: my-policy
@@ -303,7 +303,7 @@ variables:<br>
                  }
 ```
 
-action: **destroy_policy**<br>
+action_type: **destroy_policy**<br>
 Destroy a policy from Vault. `ROADMAP`<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -316,7 +316,7 @@ variables:<br>
     roles:
      - role: vault
          vars:
-             action: delete_policy
+             action_type: delete_policy
              vault_address: http://localhost:8200
              vault_token: <token>
              policy_name: my-policy
@@ -324,7 +324,7 @@ variables:<br>
 
 ## AppRoles
 
-action: **create_approle**<br>
+action_type: **create_approle**<br>
 Create AppRole in Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -335,7 +335,7 @@ variables:<br>
 ```
 
 
-action: **destroy_approle**<br>
+action_type: **destroy_approle**<br>
 Destroy AppRole in Vault.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
@@ -347,7 +347,7 @@ variables:<br>
 
 ## Administration
 
-action: **start**<br>
+action_type: **start**<br>
 Start of HashiCorp Vault service.<br>
 variables:<br>
 <kbd>(none)</kbd> : No variables required.<br>
@@ -358,10 +358,10 @@ variables:<br>
     roles:
      - role: vault
          vars:
-             action: start
+             action_type: start
 ```
 
-action: **stop**<br>
+action_type: **stop**<br>
 Stop of HashiCorp Vault service.<br>
 variables:<br>
 <kbd>(none)</kbd> : No variables required.<br>
@@ -372,10 +372,10 @@ variables:<br>
     roles:
      - role: vault
          vars:
-             action: stop
+             action_type: stop
 ```
 
-action: **unseal**<br>
+action_type: **unseal**<br>
 Unseal Vault to make it ready for use.<br>
 variables:<br>
 <kbd>vault_address</kbd> : URL to Vault, for example, `https://192.168.1.0:8200`.<br>
@@ -419,7 +419,7 @@ Example for installing Vault:
             ansible.builtin.include_role:
                 name: vault
                 vars:
-                    action: install
+                    action_type: install
                     vault:
                       container:
                         respository_url: "https://releases.hashicorp.com/vault/latest/vault_latest_linux_amd64.zip"

@@ -103,7 +103,7 @@
 - name: Unseal Vault...
   ansible.builtin.include_tasks: unseal.yml
   vars:
-    action: unseal
+    action_type: unseal
 
 #########################################################
 ## Authentication                                      ##

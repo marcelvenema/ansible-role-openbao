@@ -168,7 +168,7 @@
 - name: Configure application
   ansible.builtin.include_tasks: configure.yml
   vars:
-    action: configure
+    action_type: configure
 
 #########################################################
 ## Post-install                                        ##

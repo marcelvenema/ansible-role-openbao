@@ -14,22 +14,22 @@
   ansible.builtin.set_fact:
     openbao_vars: "{{ openbao_defaults.openbao | combine(openbao | default({}), recursive=true) }}"
 
-# If action variable is not defined, gather status of the service and set action variable
-- name: Gather action variable status...
-  ansible.builtin.include_tasks: set_action.yml
-  when: action is not defined
+# If action_type variable is not defined, gather status of the service and set action_type variable
+- name: Gather action_type variable status...
+  ansible.builtin.include_tasks: set_action_type.yml
+  when: action_type is not defined
 
 # Show message
-- name: Show action message
+- name: Show action_type message
   ansible.builtin.debug:
-    msg: "Starting role {{ role_name }}... action: {{ action }}."
+    msg: "Starting role {{ role_name }}... action: {{ action_type }}."
 
 # Assert that action is in actions
-- name: Verify valid action ({{ action }})...
+- name: Verify valid action ({{ action_type }})...
   ansible.builtin.assert:
     that:
-      - action in (actions | map('dict2items') | map('first') | map(attribute='key') | list)
-    fail_msg: The action '{{ action }}' is not in the list of valid actions...
+      - action_type in (actions | map('dict2items') | map('first') | map(attribute='key') | list)
+    fail_msg: The action '{{ action_type }}' is not in the list of valid actions...
     quiet: true
 
 # TODO: Implement Kafka publishing here
@@ -41,94 +41,94 @@
 # Install, uninstall, configure, update
 - name: Start install action...
   ansible.builtin.include_tasks: install.yml
-  when: action == "install"
+  when: action_type == "install"
 
 - name: Start uninstall action...
   ansible.builtin.include_tasks: uninstall.yml
-  when: action == "uninstall"
+  when: action_type == "uninstall"
 
 - name: Start configure action...
   ansible.builtin.include_tasks: configure.yml
-  when: action == "configure"
+  when: action_type == "configure"
 
 - name: Start update action...
   ansible.builtin.include_tasks: update.yml
-  when: action == "update"
+  when: action_type == "update"
 
 # -------------------------------------------------------
 # Start, Stop, Unseal
 - name: Start start action...
   ansible.builtin.include_tasks: administration.yml
-  when: action == "start"
+  when: action_type == "start"
 
 - name: Start stop action...
   ansible.builtin.include_tasks: administration.yml
-  when: action == "stop"
+  when: action_type == "stop"
 
 - name: Start unseal action...
   ansible.builtin.include_tasks: unseal.yml
-  when: action == "unseal"
+  when: action_type == "unseal"
 
 # -------------------------------------------------------
 # secret_engine
 - name: Start get_secret_engine task...
   ansible.builtin.include_tasks: secret_engine/secret_engine.yml
-  when: action == "get_secret_engine"
+  when: action_type == "get_secret_engine"
 
 - name: Start create_secret_engine action...
   ansible.builtin.include_tasks: secret_engine/secret_engine.yml
-  when: action == "create_secret_engine"
+  when: action_type == "create_secret_engine"
 
 - name: Start destroy_secret_engine action...
   ansible.builtin.include_tasks: secret_engine/secret_engine.yml
-  when: action == "destroy_secret_engine"
+  when: action_type == "destroy_secret_engine"
 
 # -------------------------------------------------------
 # secrets
 - name: Start get_secret action...
   ansible.builtin.include_tasks: secrets/secrets.yml
-  when: action == "get_secret"
+  when: action_type == "get_secret"
 
 - name: Start create_secret action...
   ansible.builtin.include_tasks: secrets/create_secret.yml
-  when: action == "create_secret"
+  when: action_type == "create_secret"
 
 - name: Start destroy_secret action...
   ansible.builtin.include_tasks: secrets/destroy_secret.yml
-  when: action == "destroy_secret"
+  when: action_type == "destroy_secret"
 
 - name: Start import_secrets action...
   ansible.builtin.include_tasks: secrets/import_secrets.yml
-  when: action == "import_secrets"
+  when: action_type == "import_secrets"
 
 - name: Start export_secrets action...
   ansible.builtin.include_tasks: secrets/export_secrets.yml
-  when: action == "export_secrets"
+  when: action_type == "export_secrets"
 
 # -------------------------------------------------------
 # policies
 - name: Start get_policy action...
   ansible.builtin.include_tasks: policies/policies.yml
-  when: action == "get_policy"
+  when: action_type == "get_policy"
 
 - name: Start create_policy action...
   ansible.builtin.include_tasks: policies/policies.yml
-  when: action == "create_policy"
+  when: action_type == "create_policy"
 
 - name: Start destroy_policy action...
   ansible.builtin.include_tasks: policies/policies.yml
-  when: action == "destroy_policy"
+  when: action_type == "destroy_policy"
 
 # -------------------------------------------------------
 # approles
 - name: Start get_approle action...
   ansible.builtin.include_tasks: approles/approles.yml
-  when: action == "get_approle"
+  when: action_type == "get_approle"
 
 - name: Start create_approle action...
   ansible.builtin.include_tasks: approles/approles.yml
-  when: action == "create_approle"
+  when: action_type == "create_approle"
 
 - name: Start destroy_approle action...
   ansible.builtin.include_tasks: approles/approles.yml
-  when: action == "destroy_approle"
+  when: action_type == "destroy_approle"

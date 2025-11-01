@@ -1,10 +1,10 @@
 ---
 #########################################################
-## Set action                                          ##
+## Set action_type                                     ##
 #########################################################
-# If action variable is not defined, gather status of the service
-# If service not installed, set action to install. 
-# If the service is not started, set action to start.
+# If action_type variable is not defined, gather status of the service
+# If service not installed, set action_type to install. 
+# If the service is not started, set action_type to start.
 
 # Gather installed packages
 - name: Gather installed packages...
@@ -22,10 +22,10 @@
       register: podman_containers
       failed_when: false
 
-    # Set action variable to start if container is not running
-    - name: Set variable (action)...
+    # Set action_type variable to start if container is not running
+    - name: Set variable (action_type)...
       ansible.builtin.set_fact:
-        action: start
+        action_type: start
       when:
         - podman_containers.containers is defined
         - podman_containers.containers | length > 0
@@ -33,7 +33,7 @@
         - podman_containers.containers[0].State.Status != 'running'
 
     # Set action variable to install if container is not installed
-    - name: Set variable (action)...
+    - name: Set variable (action_type)...
       ansible.builtin.set_fact:
-        action: install
+        action_type: install
       when: podman_containers.containers is not defined or (podman_containers.containers | length) == 0

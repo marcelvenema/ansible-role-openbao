@@ -8,7 +8,7 @@
       ansible.builtin.include_role:
         name: openbao
       vars:
-        action: unseal
+        action_type: unseal
         # Prefer setting via environment variables:
         #  VAULT_ADDR: e.g. https://<ip>:8200
         #  VAULT_UNSEAL_KEYS_JSON: JSON array of unseal keys, e.g. ["key1","key2","key3"]
