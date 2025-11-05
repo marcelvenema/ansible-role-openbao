@@ -15,14 +15,6 @@ openbao:
   # token is the token used to authenticate to the OpenBao server.
   token: ""
 
-  # metadata contains information about the role.
-  metadata:
-    name: openbao
-    description: OpenBao Ansible role.
-    version: 1.0.0
-    maintainer: ""
-    maintainer_email: ""
-
   # application contains the configuration for the application server.
   application:
     # validate_certs configures if the certificate of the application server should be validated. example: true or false.

@@ -128,6 +128,13 @@
     ## Import container                                ##
     #####################################################
 
+    # Debug info
+    - name: Debug info
+      ansible.builtin.debug:
+        msg: 
+          - "install openbao_vars: {{ openbao_vars }}"
+          - "test: {{ openbao_vars.container.repository_url }}"
+
     # Import container
     - name: Install {{ openbao_vars.container.name }} container on podman
       ansible.builtin.include_role:

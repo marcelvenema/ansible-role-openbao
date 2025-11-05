@@ -14,7 +14,7 @@
   loop:
     - vault_address
 
-# Check if Hashicorp Vault is not initialized via api, get content string and register as vault_init_status
+# Check if OpenBao Vault is not initialized via api, get content string and register as vault_init_status
 - name: Gather Vault status information...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/init"
