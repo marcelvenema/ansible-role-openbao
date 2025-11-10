@@ -18,7 +18,7 @@
     # List containers with containers.podman collection
     - name: Gather containers from podman...
       containers.podman.podman_container_info:
-        name: "{{ openbao.container.name | default('openbao') }}"
+        name: "{{ openbao.container_name | default('openbao') }}"
       register: podman_containers
       failed_when: false
 

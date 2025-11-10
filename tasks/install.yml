@@ -16,9 +16,10 @@
 ## Installation on podman                              ##
 #########################################################
 
-- name: Install {{ role_container_name }} container on podman...
+- name: Install {{ openbao_container_name }} container on podman...
   when: openbao_container_platform == "podman"
   block:
+
     # Gather installed packages
     - name: Gather installed packages
       ansible.builtin.package_facts:
@@ -28,7 +29,7 @@
     - name: Gather information (podman)...
       ansible.builtin.assert:
         that: '"podman" in ansible_facts.packages'
-        fail_msg: Podman is not installed. Please install Podman first. Cannot continue...
+        fail_msg: "Podman is not installed. Please install Podman first. Cannot continue..."
 
     #####################################################
     ## Volume configuration                            ##
@@ -41,7 +42,7 @@
       vars:
         action_type: create_volumes
         container_volumes: "{{ openbao_container_volumes }}"
-        volume_mode: "0777"
+        volume_mode: "{{ openbao_container_volume_mode | default('0777') }}"
 
     #####################################################
     ## OpenBao SSL certificate                         ##
@@ -134,15 +135,16 @@
         name: podman
       vars:
         action_type: import_container
+        container_name: "{{ openbao_container_name }}"       
         container_repository_url: "{{ openbao_container_repository_url }}"
         container_repository_tag: "{{ openbao_container_repository_tag | default(omit) }}"
         container_repository_checksum: "{{ openbao_container_repository_checksum | default(omit) }}"
         container_repository_checksum_algorithm: "{{ openbao_container_repository_checksum_algorithm | default(omit) }}"
-        container_name: "{{ openbao_container_name }}"
-        container_ports: "{{ openbao_container_ports }}"
-        container_volumes: "{{ openbao_container_volumes }}"
-        container_command: vault server -config=/vault/config/vault.hcl
-        container_security_opt: [label=disable]
+        container_ports: "{{ openbao_container_ports | default(omit) }}"
+        container_volumes: "{{ openbao_container_volumes | default(omit) }}"
+        container_volumes_mode: "{{ openbao_container_volume_mode | default(omit) }}"
+        container_command: "{{ openbao_container_command | default(omit) }}"
+        container_security_opt: "{{ openbao_container_security_opt | default(omit) }}"
         container_env: "{{ openbao_container_environment | default(omit) }}"
         container_privileged: "{{ openbao_container_privileged | default(false) }}"
         container_cap_add: "{{ openbao_container_cap_add | default(omit) }}"

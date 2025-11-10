@@ -39,6 +39,11 @@ openbao_container_volumes:
 # volume_mode is the mode of the volume used in the container. example: "0777" or "0755". Default is "0777".
 openbao_container_volume_mode: "0777"
 # environment is a list of environment variables used in the container.
+# command is the command used to start the container. example: "vault server -config=/vault/config/vault.hcl".
+openbao_container_command: "vault server -config=/vault/config/vault.hcl"
+# security_opt is a list of security options used in the container. example: ["label=disable"].
+openbao_container_security_opt: [label=disable]
+# environment is a list of environment variables used in the container.
 openbao_container_environment:
   SKIP_SETCAP: true
 # privileged indicates if the container should be run in privileged mode. example: true or false. Default is false.
