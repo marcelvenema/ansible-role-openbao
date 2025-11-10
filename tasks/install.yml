@@ -10,14 +10,14 @@
 # Run uninstall if uninstall is set
 - name: Run uninstall playbook if set
   ansible.builtin.include_tasks: uninstall.yml
-  when: openbao_vars.container.uninstall | default(false)
+  when: openbao_container_uninstall | default(false)
 
 #########################################################
 ## Installation on podman                              ##
 #########################################################
 
 - name: Install {{ role_container_name }} container on podman...
-  when: openbao_vars.container.platform == "podman"
+  when: openbao_container_platform == "podman"
   block:
     # Gather installed packages
     - name: Gather installed packages
@@ -39,8 +39,8 @@
       ansible.builtin.include_role:
         name: podman
       vars:
-        action: create_volumes
-        container_volumes: "{{ openbao_vars.container.volumes }}"
+        action_type: create_volumes
+        container_volumes: "{{ openbao_container_volumes }}"
         volume_mode: "0777"
 
     #####################################################
@@ -66,7 +66,7 @@
       ansible.builtin.include_role:
         name: podman
       vars:
-        action: copy_to_volume
+        action_type: copy_to_volume
         volume_source_folder: /tmp/vault/certs/
         volume_destination_folder: /vault/config
         volume_mode: "0777"
@@ -99,7 +99,7 @@
       ansible.builtin.include_role:
         name: podman
       vars:
-        action: copy_to_volume
+        action_type: copy_to_volume
         volume_source_folder: /tmp/vault/
         volume_destination_folder: /vault/config
         volume_mode: "0777"
@@ -122,45 +122,38 @@
         permanent: true
         state: enabled
         immediate: true
-      loop: "{{ openbao_vars.container.ports | default([]) }}"
+      loop: "{{ openbao_container_ports | default([]) }}"
 
     #####################################################
     ## Import container                                ##
     #####################################################
 
-    # Debug info
-    - name: Debug info
-      ansible.builtin.debug:
-        msg: 
-          - "install openbao_vars: {{ openbao_vars }}"
-          - "test: {{ openbao_vars.container.repository_url }}"
-
     # Import container
-    - name: Install {{ openbao_vars.container.name }} container on podman
+    - name: Install {{ openbao_container_name }} container on podman
       ansible.builtin.include_role:
         name: podman
       vars:
-        action: import_container
-        container_repository_url: "{{ openbao_vars.container.repository_url }}"
-        container_repository_tag: "{{ openbao_vars.container.repository_tag | default(omit) }}"
-        container_repository_checksum: "{{ openbao_vars.container.repository_checksum | default(omit) }}"
-        container_repository_checksum_algorithm: "{{ openbao_vars.container.repository_checksum_algorithm | default(omit) }}"
-        container_name: "{{ openbao_vars.container.name }}"
-        container_ports: "{{ openbao_vars.container.ports }}"
-        container_volumes: "{{ openbao_vars.container.volumes }}"
+        action_type: import_container
+        container_repository_url: "{{ openbao_container_repository_url }}"
+        container_repository_tag: "{{ openbao_container_repository_tag | default(omit) }}"
+        container_repository_checksum: "{{ openbao_container_repository_checksum | default(omit) }}"
+        container_repository_checksum_algorithm: "{{ openbao_container_repository_checksum_algorithm | default(omit) }}"
+        container_name: "{{ openbao_container_name }}"
+        container_ports: "{{ openbao_container_ports }}"
+        container_volumes: "{{ openbao_container_volumes }}"
         container_command: vault server -config=/vault/config/vault.hcl
         container_security_opt: [label=disable]
-        container_env: "{{ openbao_vars.container.environment | default(omit) }}"
-        container_privileged: "{{ openbao_vars.container.privileged | default(false) }}"
-        container_cap_add: "{{ openbao_vars.container.cap_add | default(omit) }}"
-        container_cap_drop: "{{ openbao_vars.container.cap_drop | default(omit) }}"
-        container_user: "{{ openbao_vars.container.user | default(omit) }}"
-        container_healthcheck: "{{ openbao_vars.container.healthcheck | default(omit) }}"
-        container_healthcheck_fail: "{{ openbao_vars.container.healthcheck_fail | default('none') }}"
-        container_healthcheck_retries: "{{ openbao_vars.container.healthcheck_retries | default(omit) }}"
-        container_healthcheck_interval: "{{ openbao_vars.container.healthcheck_interval | default(omit) }}"
-        container_healthcheck_timeout: "{{ openbao_vars.container.healthcheck_timeout | default(omit) }}"
-        container_healthcheck_start: "{{ openbao_vars.container.healthcheck_start | default(omit) }}"
+        container_env: "{{ openbao_container_environment | default(omit) }}"
+        container_privileged: "{{ openbao_container_privileged | default(false) }}"
+        container_cap_add: "{{ openbao_container_cap_add | default(omit) }}"
+        container_cap_drop: "{{ openbao_container_cap_drop | default(omit) }}"
+        container_user: "{{ openbao_container_user | default(omit) }}"
+        container_healthcheck: "{{ openbao_container_healthcheck | default(omit) }}"
+        container_healthcheck_fail: "{{ openbao_container_healthcheck_fail | default('none') }}"
+        container_healthcheck_retries: "{{ openbao_container_healthcheck_retries | default(omit) }}"
+        container_healthcheck_interval: "{{ openbao_container_healthcheck_interval | default(omit) }}"
+        container_healthcheck_timeout: "{{ openbao_container_healthcheck_timeout | default(omit) }}"
+        container_healthcheck_start: "{{ openbao_container_healthcheck_start | default(omit) }}"
 
 #########################################################
 ## Configuration                                       ##
@@ -169,13 +162,11 @@
 # Get ip address
 - name: Register variable (vault_address)...
   ansible.builtin.set_fact:
-    vault_address: https://{{ ansible_default_ipv4.address }}:{{ openbao_vars.container.ports[0].split(':')[0] }}
+    vault_address: https://{{ ansible_default_ipv4.address }}:{{ openbao_container_ports[0].split(':')[0] }}
 
 # Configure OpenBao
 - name: Configure application
   ansible.builtin.include_tasks: configure.yml
-  vars:
-    action_type: configure
 
 #########################################################
 ## Post-install                                        ##

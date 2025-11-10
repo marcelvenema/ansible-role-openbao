@@ -10,7 +10,7 @@
 # Determine platform from vars (default podman)
 - name: Set platform variable
   ansible.builtin.set_fact:
-    platform: "{{ openbao_vars.container.platform | default('podman') }}"
+    platform: "{{ openbao_container_platform | default('podman') }}"
 
 #########################################################
 ## Update via podman                                   ##
@@ -25,8 +25,8 @@
         name: podman
       vars:
         action: update_container
-        container_name: "{{ openbao_vars.container.name }}"
-        container_repository_url: "{{ openbao_vars.container.repository_url }}"
+        container_name: "{{ openbao_container_name }}"
+        container_repository_url: "{{ openbao_container_repository_url }}"
 
 #########################################################
 ## Post-actions                                        ##

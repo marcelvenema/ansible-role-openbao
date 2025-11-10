@@ -23,14 +23,14 @@
 #########################################################
 
 # Delete container via podman
-- name: Delete container {{ openbao_vars.container.name }} on podman
+- name: Delete container {{ openbao_container_name }} on podman
   ansible.builtin.include_role:
     name: podman
   vars:
     action: delete_container
-    container_name: "{{ openbao_vars.container.name }}"
+    container_name: "{{ openbao_container_name }}"
     result_var: "openbao_uninstall_result"
-  when: openbao_vars.container.platform == "podman"
+  when: openbao_container_platform == "podman"
 
 # TODO error handling if uninstall fails
 
@@ -39,14 +39,14 @@
 #########################################################
 
 # Start destroy_volumes from podman role
-- name: Destroy container data folders for {{ openbao_vars.container.name }}...
+- name: Destroy container data folders for {{ openbao_container_name }}...
   ansible.builtin.include_role:
     name: podman
   vars:
     action: destroy_volumes
-    container_volumes: "{{ openbao_vars.container.volumes }}"
+    container_volumes: "{{ openbao_container_volumes }}"
   when:
-    - openbao_vars.container.platform == "podman"
+    - openbao_container_platform == "podman"
     - keep_data == false
 
 #########################################################

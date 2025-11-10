@@ -1,86 +1,69 @@
 ---
-
 #########################################################
 ## OpenBao role defaults                               ##
 #########################################################
 
-# default role variables for the openbao role
-openbao:
-  # address is the URL to connect to the OpenBao server.
-  address: ""
-  # username is the username to connect to the OpenBao server.
-  username: ""
-  # password is the password to connect to the OpenBao server.
-  password: ""
-  # token is the token used to authenticate to the OpenBao server.
-  token: ""
-
-  # application contains the configuration for the application server.
-  application:
-    # validate_certs configures if the certificate of the application server should be validated. example: true or false.
-    validate_certs: false
-  # container contains the configuration for the container used to run OpenBao.
-
-  container:
-    # name is the name of the container used in podman or docker. example: "openbao".
-    name: openbao
-    # platform is the platform used for the container. example: "podman", "kubernetes", "docker" or "autodetect".
-    platform: podman
-    # uninstall indicates if the container should be uninstalled. example: true or false. Default is false.
-    uninstall: false
-    # repository_url can be a URL to a docker image or a tar file. example: "https://docker.io/sonatype/nexus3"
-    # or "/tmp/nexus3.67.1.tar", "https://192.168.1.1/repo/nexus.tar".
-    repository_url: docker.io/openbao/openbao
-    # repository_tag is a tag of the image or a version of the tar file. example: "3.67.1" or "latest" Default is "latest".
-    repository_tag: 2.4.1
-    # repository_checksum can be a checksum of the container file. example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
-    # or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".
-    # repository_checksum: ""
-    # repository_checksum_algorithm can be a checksum algorithm of the container file. example: "sha256", sha512", "md5".
-    # repository_checksum_algorithm: "sha256"
-    # ports is a list of ports used in the container. example: ["8200:8200"] or ["8200:8200", "8201:8201"].
-    ports:
-      - 8200:8200
-    # volumes is a list of volumes used in the container. example: ["vault/config:/vault/config:Z"] or
-    # ["vault/config:/vault/config:Z", "vault/file:/vault/file:Z"].
-    volumes:
-      - vault/logs:/vault/logs:Z
-      - vault/file:/vault/file:Z
-      - vault/config:/vault/config:Z
-    # volume_mode is the mode of the volume used in the container. example: "0777" or "0755". Default is "0777".
-    volume_mode: "0777"
-    # environment is a list of environment variables used in the container.
-    environment:
-      SKIP_SETCAP: true
-    # privileged indicates if the container should be run in privileged mode. example: true or false. Default is false.
-    privileged: false
-    # cap_add is a list of capabilities to add to the container. example: ["SYS_ADMIN", "NET_ADMIN"].
-    cap_add: IPC_LOCK
-    # cap_drop is a list of capabilities to drop from the container. example: ["MKNOD"].
-    # cap_drop: 
-    # user is the user to run the container as. example: "1000:
-    # user: "1000:1000"
-    # healthcheck is the command used to check if the container is healthy. example: "curl -f http://localhost:8080/health || exit 1".
-    healthcheck: wget --no-check-certificate -qO- https://127.0.0.1:8200/v1/sys/health || exit 1
-    # healthcheck_start is the time to wait before starting the health check. example: "30s".
-    healthcheck_start: 30s
-    # healthcheck_interval is the interval between health checks. example: "30s".
-    healthcheck_interval: 30s
-    # healthcheck_timeout is the timeout for the health check. example: "30s".
-    healthcheck_timeout: 30s
-    # healthcheck_retries is the number of retries for the health check. example: "3".
-    healthcheck_retries: 5
-
-  # quadlet_options is a list of options used in the container.
-  # example: ["Environment=NODE_ENV=production", "HealthCmd='wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1 '"].
-  # quadlet_options:
-
-  # secrets contains the configuration for the vault used for storing secrets and configuration data.
-  secrets:
-    # secret_name is the unique id of the vault used for storing secrets and configuration data. default is {{ansible_fqdn }}.
-    secret_name: "{{ ansible_fqdn | replace('.', '-') }}"
-    # secret_engine_name is the name of the vault used for storing secrets and configuration data. example: "nexus-repository".
-    secret_engine_name: openbao-vault
-    # <container_name>_secret_engine_description is the description of the vault used for storing secrets and configuration data.
-    # example: "Secrets for Sonatype Nexus Repository.".
-    secret_engine_description: Secrets for OpenBao Vault secret management.
+# default variables for the openbao role
+# address, username, password and token can be set via vault or extra vars
+openbao_address: ""
+openbao_username: ""
+openbao_password: ""
+openbao_token: ""
+# validate_certs configures if the certificate of the application server should be validated. example: true or false.
+openbao_application_validate_certs: false
+# container_name is the name of the container used in podman or docker. example: "openbao".
+openbao_container_name: openbao
+# platform is the platform used for the container. example: "podman", "kubernetes", "docker" or "autodetect".
+openbao_container_platform: podman
+# uninstall indicates if the container should be uninstalled. example: true or false. Default is false.
+openbao_container_uninstall: false
+# repository_url can be a URL to a docker image or a tar file. example: "https://docker.io/sonatype/nexus3"
+# or "/tmp/nexus3.67.1.tar", "https://192.168.1.1/repo/nexus.tar".
+openbao_container_repository_url: docker.io/openbao/openbao
+# repository_tag is a tag of the image or a version of the tar file. example: "3.67.1" or "latest" Default is "latest".
+openbao_container_repository_tag: 2.4.1
+# repository_checksum can be a checksum of the container file. example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+# or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".
+# openbao_container_repository_checksum: ""
+# repository_checksum_algorithm can be a checksum algorithm of the container file. example: "sha256", sha512", "md5".
+# openbao_container_repository_checksum_algorithm: "sha256" 
+# ports is a list of ports used in the container. example: ["8200:8200"] or ["8200:8200", "8201:8201"].
+openbao_container_ports:
+  - 8200:8200
+# volumes is a list of volumes used in the container. example: ["vault/config:/vault/config:Z"] or
+# ["vault/config:/vault/config:Z", "vault/file:/vault/file:Z"]
+openbao_container_volumes:
+  - vault/logs:/vault/logs:Z
+  - vault/file:/vault/file:Z
+  - vault/config:/vault/config:Z
+# volume_mode is the mode of the volume used in the container. example: "0777" or "0755". Default is "0777".
+openbao_container_volume_mode: "0777"
+# environment is a list of environment variables used in the container.
+openbao_container_environment:
+  SKIP_SETCAP: true
+# privileged indicates if the container should be run in privileged mode. example: true or false. Default is false.
+openbao_container_privileged: false
+# cap_add is a list of capabilities to add to the container. example: ["SYS_ADMIN", "NET_ADMIN"].
+openbao_container_cap_add: IPC_LOCK
+# cap_drop is a list of capabilities to drop from the container. example: ["MKNOD"].
+# openbao_container_cap_drop: 
+# user is the user to run the container as. example: "1000:
+# openbao_container_user: "1000:1000"
+# healthcheck is the command used to check if the container is healthy. example: "curl -f http://localhost:8080/health || exit 1".
+openbao_container_healthcheck: wget --no-check-certificate -qO- https://127.0.0.1:8200/v1/sys/health || exit 1
+# healthcheck_start is the time to wait before starting the health check. example: "30s".
+openbao_container_healthcheck_start: 30s
+# healthcheck_interval is the interval between health checks. example: "30s".
+openbao_container_healthcheck_interval: 30s
+# healthcheck_timeout is the timeout for the health check. example: "30s".
+openbao_container_healthcheck_timeout: 30s
+# healthcheck_retries is the number of retries for the health check. example: "3".
+openbao_container_healthcheck_retries: 5  
+# quadlet_options is a list of options used in the container.
+# openbao_container_quadlet_options: []
+# secret_name is the name of the secret used for storing secrets and configuration data. example: "nexus-repository-01".
+openbao_secrets_secret_name: "{{ ansible_fqdn | replace('.', '-') }}"
+# secret_engine_name is the name of the vault used for storing secrets and configuration data. example: "nexus-repository".
+openbao_secrets_secret_engine_name: openbao-vault
+# secret_engine_description is the description of the vault used for storing secrets and configuration data.
+openbao_secrets_secret_engine_description: "Secrets for OpenBao Vault secret management."

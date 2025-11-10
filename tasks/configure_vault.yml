@@ -19,12 +19,12 @@
 # Register variable (_secret_engine_name)
 - name: Register variable (secret_engine_name)...
   ansible.builtin.set_fact:
-    _secret_engine_name: "{{ openbao_vars.secrets.secret_engine_name | default('openbao-vault') }}"
+    _secret_engine_name: "{{ openbao_secrets_secret_engine_name | default('openbao-vault') }}"
 
 # Register variable (_secret_name)
 - name: Register variable (secret_name)...
   ansible.builtin.set_fact:
-    _secret_name: "{{ openbao_vars.secrets.secret_name | default(ansible_fqdn | replace('.', '-')) }}"
+    _secret_name: "{{ openbao_secrets_secret_name | default(ansible_fqdn | replace('.', '-')) }}"
 
 #########################################################
 ## Secret Engine                                       ##
@@ -37,7 +37,7 @@
   vars:
     action_type: create_secret_engine
     secret_engine_name: "{{ _secret_engine_name }}"
-    secret_engine_description: "{{ openbao_vars.secrets.secret_engine_description | default('Secrets for OpenBao Vault.') }}"
+    secret_engine_description: "{{ openbao_secrets_secret_engine_description | default('Secrets for OpenBao Vault.') }}"
     secret_engine_type: kv
 
 #########################################################
@@ -49,7 +49,7 @@
 - name: Register variable (secret_keyvalue)...
   ansible.builtin.set_fact:
     _secret_keyvalue: |
-      repository_url : {{ openbao_vars.container.repository_url | default('change_me') }}
+      repository_url : {{ openbao_container_repository_url | default('change_me') }}
       vault_address : {{ vault_address | default('change_me') }}
 
 # Store usernames and passwords in OpenBao Vault.

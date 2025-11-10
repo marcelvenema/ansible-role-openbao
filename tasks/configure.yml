@@ -18,7 +18,7 @@
 - name: Gather Vault status information...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/init"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
+    validate_certs: "{{ openbao_application_validate_certs | default(true) }}"
     method: GET
     return_content: true
   register: vault_init_status
@@ -41,7 +41,7 @@
     - name: Initialize Vault server...
       ansible.builtin.uri:
         url: "{{ vault_address }}/v1/sys/init"
-        validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
+        validate_certs: "{{ openbao_application_validate_certs | default(true) }}"
         method: POST
         body_format: json
         body:
@@ -81,7 +81,7 @@
       ansible.builtin.include_role:
         name: podman
       vars:
-        action: copy_to_volume
+        action_type: copy_to_volume
         volume_source_folder: /tmp/vault
         volume_destination_folder: /vault/config
 
@@ -113,7 +113,7 @@
 - name: Enable OpenBao Vault AppRole...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/auth/approle"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
+    validate_certs: "{{ openbao_application_validate_certs | default(true) }}"
     method: POST
     status_code: 204,400
     headers:
@@ -127,7 +127,7 @@
 - name: Enable OpenBao Vault Username & Password...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/auth/userpass"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
+    validate_certs: "{{ openbao_application_validate_certs | default(true) }}"
     method: POST
     status_code: 204,400
     headers:
@@ -145,7 +145,7 @@
 - name: Enable OpenBao Vault PKI Secrets Engine...
   ansible.builtin.uri:
     url: "{{ vault_address }}/v1/sys/mounts/pki"
-    validate_certs: "{{ openbao_vars.application.validate_certs | default(true) }}"
+    validate_certs: "{{ openbao_application_validate_certs | default(true) }}"
     method: POST
     status_code: 204,400
     headers:
