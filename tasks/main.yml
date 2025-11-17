@@ -18,7 +18,7 @@
   ansible.builtin.assert:
     that:
       - action_type in (actions | map('dict2items') | map('first') | map(attribute='key') | list)
-    fail_msg: The action '{{ action_type }}' is not in the list of valid actions...
+    fail_msg: "The action_type: '{{ action_type }}' is not in the list of valid actions..."
     quiet: true
 
 # TODO: Implement Kafka publishing here

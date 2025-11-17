@@ -14,7 +14,7 @@ Latest version: <kbd>v0.4.1</kbd> - See [RELEASES](docs/RELEASES.md) for more in
 Available variables are listed below, along with default values (see `defaults/main.yml`):<br>
 
 
-# Actions summary:
+# Action_type summary:
 
 <table style="border:0px; width:100%">
   <tr><th><a href="#Deployment">Deployment</a></th><th><a href="#Secrets-Management">Secrets Management</a></th><th><a href="#Secret-Engines">Secret Engines</a></th><th><a href="#Policies">Policies</a></th><th><a href="#AppRoles">AppRoles</a></th><th><a href="#Administration">Administration</a></th></tr>
@@ -31,7 +31,7 @@ Available variables are listed below, along with default values (see `defaults/m
 ## Default variables:
 This role uses the `openbao` variable for configuration parameters. See [defaults/main.yml](defaults/main.yml) for a comprehensive list of available options and their descriptions.<br>
 
-## Actions
+## Action_types
 
 ### Deployment
 
@@ -39,13 +39,13 @@ action_type: **install**<br>
 _Installation of the latest version of OpenBao Vault_.<br>
 This action will install the latest version of OpenBao Vault on the target hosts using the specified container image and configuration parameters. It ensures that the Vault service is set up and ready for use according to the provided variables.<br>
 variables:<br>
-<kbd>openbao - container - name</kbd> : (optional) Name of container. Default is 'openbao'.<br>
-<kbd>openbao - container - repository_url</kbd> - URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
-<kbd>openbao - container - repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
-<kbd>openbao - container - repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
-<kbd>openbao - container - repository_checksum_algorithm</kbd> : (optional) Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
-<kbd>openbao - container - platform</kbd>  : (optional) Install on a specific platform, for example, podman, kubernetes, host. Default is podman-. (podman, kubernetes, host).<br>
-<kbd>openbao - container - uninstall</kbd> : (optional) true/false. When true, uninstall is started before installation.<br>
+<kbd>openbao_container_name</kbd> : (optional) Name of container. Default is 'openbao'.<br>
+<kbd>openbao_container_repository_url</kbd> - URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
+<kbd>openbao_container_repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
+<kbd>openbao_container_repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
+<kbd>openbao_container_checksum_algorithm</kbd> : (optional) Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
+<kbd>openbao_container_platform</kbd>  : (optional) Install on a specific platform, for example, podman, kubernetes, host. Default is podman-. (podman, kubernetes, host).<br>
+<kbd>openbao_container_uninstall</kbd> : (optional) true/false. When true, uninstall is started before installation.<br>
 
 ```
 - name: Install OpenBao Vault
@@ -54,9 +54,7 @@ variables:<br>
      - role: openbao
          vars:
              action_type: install
-             openbao:
-               container:
-                 repository_url: docker.io/openbao/openbao
+             openbao_container_repository_url: https://192.168.1.1/repo/vault2.41.1.tar
 
 ```
 
@@ -85,10 +83,10 @@ variables:<br>
 <kbd>vault_address</kbd> : URL to the Vault address, e.g., `http://localhost:8200`.<br>
 <kbd>vault_token</kbd> : Token for Vault access.<br>
 <kbd>secret_name</kbd> : unique identification of OpenBao instance, for example server name/cluster name. Will be used to get/put parameters in Vault.<br>
-<kbd>openbao - container - repository_url</kbd> - (optional) URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
-<kbd>openbao - container - repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
-<kbd>openbao - container - repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
-<kbd>openbao - container - repository_checksum_algorithm</kbd> : (optional) Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
+<kbd>openbao_container_repository_url</kbd> - (optional) URL with the location of the container repository. Can be a URL or path to a local or remote file, for example, 'docker.io/openbao/openbao', '/tmp/openbao.tar', 'https://192.168.1.1/repo/vault2.41.1.tar'. By default, it points to docker.io/openbao/openbao via defaults/main.yml.<br>
+<kbd>openbao_container_repository_tag</kbd> : (optional) Release or version number of the image. Default is 'latest'.<br>
+<kbd>openbao_container_repository_checksum</kbd> : (optional) Checksum of the container image. Example: "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" or "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef".<br>
+<kbd>openbao_container_repository_checksum_algorithm</kbd> : (optional) Algorithm for the checksum, for example, sha256, sha512, md5, etc.<br>
 
 ```
 - name: Update OpenBao Vault
@@ -109,9 +107,7 @@ or:
      - role: openbao
          vars:
              action_type: update
-             openbao:
-               container:
-                 repository_url: "https://<nexus repository>/repository/containers/openbao_2.4.1.tar"
+             openbao_container_repository_url: "https://<nexus repository>/repository/containers/openbao_2.4.1.tar"
 
 ```
 
@@ -429,11 +425,6 @@ Example for installing Vault:
 (none).<br>
 
 ## Other information
-
-**Global variables**
-
-# Create list of all variables used in /vars/main.yml
-
 
 ## License
 MIT
