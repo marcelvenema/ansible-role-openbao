@@ -12,7 +12,7 @@ galaxy_info:
 
   company: mindef.nl
   # icon will be used with automatic readme.md generation.
-  icon: "./docs/media/logo_openbao.png"
+  icon: "./docs/media/icon_openbao.png"
   # example will be used with automatic readme.md generation.
 
   example: ""
