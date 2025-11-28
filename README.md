@@ -3,7 +3,7 @@
 
 <table border="0">
   <tr>
-    <td width="160px" valign="top"><img src="docs/media/logo_openbao.png" align="left" height="128" width="128" /></td>
+    <td width="160px" valign="top"><img src="./docs/media/logo_openbao.png" align="left" height="128" width="128" /></td>
     <td><b>Ansible role for OpenBao Vault</b><br/>
         Ansible role for installation, configuration, usage, and management of OpenBao Vault.<br>OpenBao Vault is a tool for securely accessing secrets. A secret
 is anything that you want to tightly control access to, such as API keys, passwords, certificates, and more. OpenBao Vault provides a unified interface
@@ -14,12 +14,16 @@ Vault.<br>Official website: `https://openbao.org/`<br><br>
   </tr>
 </table>
 
-Ansible role Openbao : [Design](docs/DESIGN.md)  |  [Administration](docs/ADMINISTRATION.md)  |  [Examples](examples)  |  [Test](molecule)  |  [Issues]()  |<br>
+Ansible role **Openbao** : [Design](docs/DESIGN.md)  |  [Administration](docs/ADMINISTRATION.md)  |  [Examples](examples)  |  [Test](molecule)  |  [Issues]()  |<br>
 <br>
 Latest version: <kbd>TBD</kbd> - See [RELEASES](docs/RELEASES.md) for more information.<br>
 
+***
+
 # Role variables
 Available variables are listed in defaults, see [`defaults/main.yml`](defaults/main.yml)<br>
+
+***
 
 # Action_type summary:
 
@@ -66,9 +70,6 @@ Install OpenBao Vault:<br>
 ```
 
 
-## Configuration
-(none).<br>
-
 ## Other information
 (none)
 
@@ -77,6 +78,5 @@ MIT
 
 ## Author
 Marcel Venema
-
 
 <!-- DOCSIBLE END -->
