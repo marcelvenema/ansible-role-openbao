@@ -38,21 +38,21 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
 
 # Actions
 
-##administration category:
+## administration category:
 
-###start
+### start
 action: **start**
 Start OpenBao container.
 variables:
 <kbd>(none).</kbd><br>
 
-###stop
+### stop
 action: **stop**
 Stop OpenBao container.
 variables:
 <kbd>(none).</kbd><br>
 
-###unseal
+### unseal
 action: **unseal**
 Unseal OpenBao Vault.
 variables:
@@ -61,112 +61,112 @@ variables:
 <br>
 
 
-##approles category:
+## approles category:
 
-###create_approle
+### create_approle
 action: **create_approle**
 Create an approle.
 variables:
 <kbd>(none).</kbd><br>
 
-###destroy_approle
+### destroy_approle
 action: **destroy_approle**
 Remove an approle.
 variables:
 <kbd>(none).</kbd><br>
 
-###get_approle
+### get_approle
 action: **get_approle**
 Retrieve the configuration of an approle.
 variables:
 <kbd>(none).</kbd><br>
 
 
-##deployment category:
+## deployment category:
 
-###configure
+### configure
 action: **configure**
 Configure OpenBao. Create a token and unseal keys. Unseal OpenBao.
 variables:
 <kbd>(none).</kbd><br>
 
-###install
+### install
 action: **install**
 Installation of the latest version of OpenBao. Basic configuration.
 variables:
 <kbd>uninstall</kbd>(optional):  Start uninstallation before installation begins. true/false. Default is 'true'.. Default value: true<br>
 <br>
 
-###uninstall
+### uninstall
 action: **uninstall**
 Uninstallation of OpenBao. Removes the container, files, users, and groups.
 variables:
 <kbd>(none).</kbd><br>
 
-###update
+### update
 action: **update**
 Update OpenBao to the latest version.
 variables:
 <kbd>(none).</kbd><br>
 
 
-##policies category:
+## policies category:
 
-###create_policy
+### create_policy
 action: **create_policy**
 Create a policy.
 variables:
 <kbd>(none).</kbd><br>
 
-###destroy_policy
+### destroy_policy
 action: **destroy_policy**
 Remove a policy.
 variables:
 <kbd>(none).</kbd><br>
 
-###get_policy
+### get_policy
 action: **get_policy**
 Retrieve the configuration of a policy.
 variables:
 <kbd>(none).</kbd><br>
 
 
-##secret_engines category:
+## secret_engines category:
 
-###create_secret_engine
+### create_secret_engine
 action: **create_secret_engine**
 Create a secret engine.
 variables:
 <kbd>(none).</kbd><br>
 
-###destroy_secret_engine
+### destroy_secret_engine
 action: **destroy_secret_engine**
 Remove a secret engine.
 variables:
 <kbd>(none).</kbd><br>
 
-###get_secret_engine
+### get_secret_engine
 action: **get_secret_engine**
 Retrieve the configuration of a secret engine.
 variables:
 <kbd>(none).</kbd><br>
 
 
-##secrets category:
+## secrets category:
 
-###create_secret
+### create_secret
 action: **create_secret**
 Create a secret.
 variables:
 <kbd>(none).</kbd><br>
 
-###destroy_secret
+### destroy_secret
 action: **destroy_secret**
 Remove a secret.
 variables:
 <kbd>(none).</kbd><br>
 
-###export_secrets
+### export_secrets
 action: **export_secrets**
 Export a secret from Vault.
 variables:
@@ -174,13 +174,13 @@ variables:
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 <br>
 
-###get_secret
+### get_secret
 action: **get_secret**
 Retrieve a secret.
 variables:
 <kbd>(none).</kbd><br>
 
-###import_secrets
+### import_secrets
 action: **import_secrets**
 Import a secret into Vault.
 variables:

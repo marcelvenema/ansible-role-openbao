@@ -27,16 +27,13 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
 ***
 
 
-
-# Action_type summary:
-
 # Action_type summary:
 
 <table style="border:0px; width:100%">
   <tr>
   <th><a href="#administration">administration</a></th><th><a href="#approles">approles</a></th><th><a href="#deployment">deployment</a></th><th><a href="#policies">policies</a></th><th><a href="#secret_engines">secret_engines</a></th><th><a href="#secrets">secrets</a></th>
   </tr>
-  <tr><td valign=top><a href="#start">start</a><br><a href="#stop">stop</a><br><a href="#unseal">unseal</a><br></td><td valign=top><a href="#create_approle">create_approle</a><br><a href="#destroy_approle">destroy_approle</a><br><a href="#get_approle">get_approle</a><br></td><td valign=top><a href="#configure">configure</a><br><a href="#install">install</a><br><a href="#uninstall">uninstall</a><br><a href="#update">update</a><br></td><td valign=top><a href="#create_policy">create_policy</a><br><a href="#destroy_policy">destroy_policy</a><br><a href="#get_policy">get_policy</a><br></td><td valign=top><a href="#create_secret_engine">create_secret_engine</a><br><a href="#destroy_secret_engine">destroy_secret_engine</a><br><a href="#get_secret_engine">get_secret_engine</a><br></td><td valign=top><a href="#create_secret">create_secret</a><br><a href="#destroy_secret">destroy_secret</a><br><a href="#export_secrets">export_secrets</a><br><a href="#get_secret">get_secret</a><br><a href="#import_secrets">import_secrets</a><br></td></tr>
+  <tr><td valign=top>start<br>stop<br>unseal<br></td><td valign=top>create_approle<br>destroy_approle<br>get_approle<br></td><td valign=top>configure<br>install<br>uninstall<br>update<br></td><td valign=top>create_policy<br>destroy_policy<br>get_policy<br></td><td valign=top>create_secret_engine<br>destroy_secret_engine<br>get_secret_engine<br></td><td valign=top>create_secret<br>destroy_secret<br>export_secrets<br>get_secret<br>import_secrets<br></td></tr>
 </table>
 
 Explanation of action variables in [`docs/index.md`](docs/index.md)<br>
