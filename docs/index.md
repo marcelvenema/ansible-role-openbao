@@ -47,7 +47,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>start</b><br/>Start OpenBao container.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -59,7 +59,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>stop</b><br/>Stop OpenBao container.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -71,7 +71,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>unseal</b><br/>Unseal OpenBao Vault.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>vault_address</kbd>:  URL to Vault, for example `https://. Default value: (none).<br>
 <kbd>vault_unseal_keys</kbd>:  Unseal keys. Default value: (none).<br>
 </td>
@@ -88,7 +88,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>create_approle</b><br/>Create an approle.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -100,7 +100,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>destroy_approle</b><br/>Remove an approle.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -112,7 +112,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>get_approle</b><br/>Retrieve the configuration of an approle.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -127,7 +127,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>configure</b><br/>Configure OpenBao. Create a token and unseal keys. Unseal OpenBao.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -139,7 +139,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>install</b><br/>Installation of the latest version of OpenBao. Basic configuration.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>uninstall</kbd>(optional):  Start uninstallation before installation begins. true/false. Default is 'true'.. Default value: true<br>
 </td>
   </tr>
@@ -152,7 +152,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>uninstall</b><br/>Uninstallation of OpenBao. Removes the container, files, users, and groups.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -164,7 +164,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>update</b><br/>Update OpenBao to the latest version.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -179,7 +179,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>create_policy</b><br/>Create a policy.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -191,7 +191,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>destroy_policy</b><br/>Remove a policy.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -203,7 +203,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>get_policy</b><br/>Retrieve the configuration of a policy.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -218,7 +218,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>create_secret_engine</b><br/>Create a secret engine.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -230,7 +230,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>destroy_secret_engine</b><br/>Remove a secret engine.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -242,7 +242,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>get_secret_engine</b><br/>Retrieve the configuration of a secret engine.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -257,7 +257,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>create_secret</b><br/>Create a secret.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -269,7 +269,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>destroy_secret</b><br/>Remove a secret.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -281,7 +281,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>export_secrets</b><br/>Export a secret from Vault.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 </td>
@@ -295,7 +295,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>get_secret</b><br/>Retrieve a secret.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
@@ -307,7 +307,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
     <td>action: <b>import_secrets</b><br/>Import a secret into Vault.<br></td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">variables:<br>
+    <td colspan="2" valign="top" width="100%">variables:<br>
     <kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 </td>
