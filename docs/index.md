@@ -41,53 +41,37 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
 ## administration: <a id="administration"></a>
 
 ### start <a id="start"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>start</b><br/>Start OpenBao container.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **start**<br>
-Start OpenBao container.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### stop <a id="stop"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>stop</b><br/>Stop OpenBao container.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **stop**<br>
-Stop OpenBao container.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### unseal <a id="unseal"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>unseal</b><br/>Unseal OpenBao Vault.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>vault_address</kbd>:  URL to Vault, for example `https://. Default value: (none).<br>
 <kbd>vault_unseal_keys</kbd>:  Unseal keys. Default value: (none).<br>
 </td>
@@ -95,399 +79,240 @@ variables:<br>
 </table>
 
 
-
-
-action: **unseal**<br>
-Unseal OpenBao Vault.<br>
-variables:<br>
-<kbd>vault_address</kbd>:  URL to Vault, for example `https://. Default value: (none).<br>
-<kbd>vault_unseal_keys</kbd>:  Unseal keys. Default value: (none).<br>
-<br>
-
-
 ## approles: <a id="approles"></a>
 
 ### create_approle <a id="create_approle"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>create_approle</b><br/>Create an approle.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **create_approle**<br>
-Create an approle.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### destroy_approle <a id="destroy_approle"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>destroy_approle</b><br/>Remove an approle.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **destroy_approle**<br>
-Remove an approle.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### get_approle <a id="get_approle"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>get_approle</b><br/>Retrieve the configuration of an approle.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
-
-
-
-
-action: **get_approle**<br>
-Retrieve the configuration of an approle.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
 
 
 ## deployment: <a id="deployment"></a>
 
 ### configure <a id="configure"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>configure</b><br/>Configure OpenBao. Create a token and unseal keys. Unseal OpenBao.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **configure**<br>
-Configure OpenBao. Create a token and unseal keys. Unseal OpenBao.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### install <a id="install"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>install</b><br/>Installation of the latest version of OpenBao. Basic configuration.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>uninstall</kbd>(optional):  Start uninstallation before installation begins. true/false. Default is 'true'.. Default value: true<br>
 </td>
   </tr>
 </table>
 
-
-
-
-action: **install**<br>
-Installation of the latest version of OpenBao. Basic configuration.<br>
-variables:<br>
-<kbd>uninstall</kbd>(optional):  Start uninstallation before installation begins. true/false. Default is 'true'.. Default value: true<br>
-<br>
-
 ### uninstall <a id="uninstall"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>uninstall</b><br/>Uninstallation of OpenBao. Removes the container, files, users, and groups.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **uninstall**<br>
-Uninstallation of OpenBao. Removes the container, files, users, and groups.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### update <a id="update"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>update</b><br/>Update OpenBao to the latest version.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
-
-
-
-
-action: **update**<br>
-Update OpenBao to the latest version.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
 
 
 ## policies: <a id="policies"></a>
 
 ### create_policy <a id="create_policy"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>create_policy</b><br/>Create a policy.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **create_policy**<br>
-Create a policy.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### destroy_policy <a id="destroy_policy"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>destroy_policy</b><br/>Remove a policy.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **destroy_policy**<br>
-Remove a policy.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### get_policy <a id="get_policy"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>get_policy</b><br/>Retrieve the configuration of a policy.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
-
-
-
-
-action: **get_policy**<br>
-Retrieve the configuration of a policy.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
 
 
 ## secret_engines: <a id="secret_engines"></a>
 
 ### create_secret_engine <a id="create_secret_engine"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>create_secret_engine</b><br/>Create a secret engine.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **create_secret_engine**<br>
-Create a secret engine.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### destroy_secret_engine <a id="destroy_secret_engine"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>destroy_secret_engine</b><br/>Remove a secret engine.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **destroy_secret_engine**<br>
-Remove a secret engine.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### get_secret_engine <a id="get_secret_engine"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>get_secret_engine</b><br/>Retrieve the configuration of a secret engine.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
-
-
-
-
-action: **get_secret_engine**<br>
-Retrieve the configuration of a secret engine.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
 
 
 ## secrets: <a id="secrets"></a>
 
 ### create_secret <a id="create_secret"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>create_secret</b><br/>Create a secret.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **create_secret**<br>
-Create a secret.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### destroy_secret <a id="destroy_secret"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>destroy_secret</b><br/>Remove a secret.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **destroy_secret**<br>
-Remove a secret.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### export_secrets <a id="export_secrets"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>export_secrets</b><br/>Export a secret from Vault.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 </td>
   </tr>
 </table>
 
-
-
-
-action: **export_secrets**<br>
-Export a secret from Vault.<br>
-variables:<br>
-<kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
-<kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
-<br>
-
 ### get_secret <a id="get_secret"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>get_secret</b><br/>Retrieve a secret.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>(none).</kbd></td>
   </tr>
 </table>
 
-
-
-
-action: **get_secret**<br>
-Retrieve a secret.<br>
-variables:<br>
-<kbd>(none).</kbd><br>
-
 ### import_secrets <a id="import_secrets"></a>
-<table border="0">
+<table border="0" width="100%">
   <tr>
     <td width="80px" valign="top"><img src="media/icon_openbao.png" align="left" height="64" width="64" /></td>
     <td>action: <b>import_secrets</b><br/>Import a secret into Vault.<br></td>
   </tr>
   <tr>
-    <td colspan="2">variables:<br>
+    <td colspan="2" valign="top">variables:<br>
     <kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 </td>
   </tr>
 </table>
-
-
-
-
-action: **import_secrets**<br>
-Import a secret into Vault.<br>
-variables:<br>
-<kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
-<kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
-<br>
 
 
 <!-- DOCSIBLE END -->
