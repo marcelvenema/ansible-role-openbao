@@ -9,8 +9,12 @@ openbao_address: ""
 openbao_username: ""
 openbao_password: ""
 openbao_token: ""
+
+# default application variables
 # validate_certs configures if the certificate of the application server should be validated. example: true or false.
 openbao_application_validate_certs: false
+
+# default container variables
 # container_name is the name of the container used in podman or docker. example: "openbao".
 openbao_container_name: openbao
 # platform is the platform used for the container. example: "podman", "kubernetes", "docker" or "autodetect".

@@ -8,12 +8,12 @@
   ansible.builtin.include_tasks: set_action_type.yml
   when: action_type is not defined
 
-# Show message
+# Log which action_type is being executed
 - name: Show action_type message
   ansible.builtin.debug:
     msg: "Starting role {{ role_name }}... action: {{ action_type }}."
 
-# Assert that action is in actions
+# Assert that action_type is in actions
 - name: Verify valid action ({{ action_type }})...
   ansible.builtin.assert:
     that:

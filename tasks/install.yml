@@ -149,6 +149,7 @@
         container_privileged: "{{ openbao_container_privileged | default(false) }}"
         container_cap_add: "{{ openbao_container_cap_add | default(omit) }}"
         container_cap_drop: "{{ openbao_container_cap_drop | default(omit) }}"
+        container_arch: "{{ openbao_container_arch | default(omit) }}"
         container_user: "{{ openbao_container_user | default(omit) }}"
         container_healthcheck: "{{ openbao_container_healthcheck | default(omit) }}"
         container_healthcheck_fail: "{{ openbao_container_healthcheck_fail | default('none') }}"
@@ -156,6 +157,8 @@
         container_healthcheck_interval: "{{ openbao_container_healthcheck_interval | default(omit) }}"
         container_healthcheck_timeout: "{{ openbao_container_healthcheck_timeout | default(omit) }}"
         container_healthcheck_start: "{{ openbao_container_healthcheck_start | default(omit) }}"
+        container_quadlet_options: "{{ openbao_container_quadlet_options | default(omit) }}"
+
 
 #########################################################
 ## Configuration                                       ##

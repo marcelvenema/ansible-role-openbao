@@ -29,24 +29,28 @@ actions:
 
   # Administration actions
   - start:
-      description: Start OpenBao.
+      description: Start OpenBao container.
       icon: media/icon_openbao.png
       category: administration
 
   - stop:
-      description: Stop OpenBao.
+      description: Stop OpenBao container.
       icon: media/icon_openbao.png
       category: administration
 
   - unseal:
-      description: Unseal OpenBao.
+      description: Unseal OpenBao Vault.
       icon: media/icon_openbao.png
       category: administration
       parameters:
         - vault_address:
             description: URL to Vault, for example `https://
+            required: true
+            value: "(none)."
         - vault_unseal_keys:
             description: Unseal keys
+            required: true
+            value: "(none)."
 
   # Secret engine actions
   - get_secret_engine:
