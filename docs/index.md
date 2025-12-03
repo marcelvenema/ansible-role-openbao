@@ -38,7 +38,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
 
 # Actions
 
-## administration category:
+## administration category: <a id="administration"></a>
 
 ### start
 action: **start**
@@ -61,7 +61,7 @@ variables:
 <br>
 
 
-## approles category:
+## approles category: <a id="approles"></a>
 
 ### create_approle
 action: **create_approle**
@@ -82,7 +82,7 @@ variables:
 <kbd>(none).</kbd><br>
 
 
-## deployment category:
+## deployment category: <a id="deployment"></a>
 
 ### configure
 action: **configure**
@@ -110,7 +110,7 @@ variables:
 <kbd>(none).</kbd><br>
 
 
-## policies category:
+## policies category: <a id="policies"></a>
 
 ### create_policy
 action: **create_policy**
@@ -131,7 +131,7 @@ variables:
 <kbd>(none).</kbd><br>
 
 
-## secret_engines category:
+## secret_engines category: <a id="secret_engines"></a>
 
 ### create_secret_engine
 action: **create_secret_engine**
@@ -152,7 +152,7 @@ variables:
 <kbd>(none).</kbd><br>
 
 
-## secrets category:
+## secrets category: <a id="secrets"></a>
 
 ### create_secret
 action: **create_secret**
