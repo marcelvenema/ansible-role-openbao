@@ -38,152 +38,152 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
 
 # Actions
 
-## administration category: <a id="administration"></a>
+## administration: <a id="administration"></a>
 
-### start
-action: **start**
-Start OpenBao container.
-variables:
+### start <a id="start"></a>
+action: **start**<br>
+Start OpenBao container.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### stop
-action: **stop**
-Stop OpenBao container.
-variables:
+### stop <a id="stop"></a>
+action: **stop**<br>
+Stop OpenBao container.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### unseal
-action: **unseal**
-Unseal OpenBao Vault.
-variables:
+### unseal <a id="unseal"></a>
+action: **unseal**<br>
+Unseal OpenBao Vault.<br>
+variables:<br>
 <kbd>vault_address</kbd>:  URL to Vault, for example `https://. Default value: (none).<br>
 <kbd>vault_unseal_keys</kbd>:  Unseal keys. Default value: (none).<br>
 <br>
 
 
-## approles category: <a id="approles"></a>
+## approles: <a id="approles"></a>
 
-### create_approle
-action: **create_approle**
-Create an approle.
-variables:
+### create_approle <a id="create_approle"></a>
+action: **create_approle**<br>
+Create an approle.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### destroy_approle
-action: **destroy_approle**
-Remove an approle.
-variables:
+### destroy_approle <a id="destroy_approle"></a>
+action: **destroy_approle**<br>
+Remove an approle.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### get_approle
-action: **get_approle**
-Retrieve the configuration of an approle.
-variables:
+### get_approle <a id="get_approle"></a>
+action: **get_approle**<br>
+Retrieve the configuration of an approle.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
 
-## deployment category: <a id="deployment"></a>
+## deployment: <a id="deployment"></a>
 
-### configure
-action: **configure**
-Configure OpenBao. Create a token and unseal keys. Unseal OpenBao.
-variables:
+### configure <a id="configure"></a>
+action: **configure**<br>
+Configure OpenBao. Create a token and unseal keys. Unseal OpenBao.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### install
-action: **install**
-Installation of the latest version of OpenBao. Basic configuration.
-variables:
+### install <a id="install"></a>
+action: **install**<br>
+Installation of the latest version of OpenBao. Basic configuration.<br>
+variables:<br>
 <kbd>uninstall</kbd>(optional):  Start uninstallation before installation begins. true/false. Default is 'true'.. Default value: true<br>
 <br>
 
-### uninstall
-action: **uninstall**
-Uninstallation of OpenBao. Removes the container, files, users, and groups.
-variables:
+### uninstall <a id="uninstall"></a>
+action: **uninstall**<br>
+Uninstallation of OpenBao. Removes the container, files, users, and groups.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### update
-action: **update**
-Update OpenBao to the latest version.
-variables:
-<kbd>(none).</kbd><br>
-
-
-## policies category: <a id="policies"></a>
-
-### create_policy
-action: **create_policy**
-Create a policy.
-variables:
-<kbd>(none).</kbd><br>
-
-### destroy_policy
-action: **destroy_policy**
-Remove a policy.
-variables:
-<kbd>(none).</kbd><br>
-
-### get_policy
-action: **get_policy**
-Retrieve the configuration of a policy.
-variables:
+### update <a id="update"></a>
+action: **update**<br>
+Update OpenBao to the latest version.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
 
-## secret_engines category: <a id="secret_engines"></a>
+## policies: <a id="policies"></a>
 
-### create_secret_engine
-action: **create_secret_engine**
-Create a secret engine.
-variables:
+### create_policy <a id="create_policy"></a>
+action: **create_policy**<br>
+Create a policy.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### destroy_secret_engine
-action: **destroy_secret_engine**
-Remove a secret engine.
-variables:
+### destroy_policy <a id="destroy_policy"></a>
+action: **destroy_policy**<br>
+Remove a policy.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### get_secret_engine
-action: **get_secret_engine**
-Retrieve the configuration of a secret engine.
-variables:
+### get_policy <a id="get_policy"></a>
+action: **get_policy**<br>
+Retrieve the configuration of a policy.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
 
-## secrets category: <a id="secrets"></a>
+## secret_engines: <a id="secret_engines"></a>
 
-### create_secret
-action: **create_secret**
-Create a secret.
-variables:
+### create_secret_engine <a id="create_secret_engine"></a>
+action: **create_secret_engine**<br>
+Create a secret engine.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### destroy_secret
-action: **destroy_secret**
-Remove a secret.
-variables:
+### destroy_secret_engine <a id="destroy_secret_engine"></a>
+action: **destroy_secret_engine**<br>
+Remove a secret engine.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### export_secrets
-action: **export_secrets**
-Export a secret from Vault.
-variables:
+### get_secret_engine <a id="get_secret_engine"></a>
+action: **get_secret_engine**<br>
+Retrieve the configuration of a secret engine.<br>
+variables:<br>
+<kbd>(none).</kbd><br>
+
+
+## secrets: <a id="secrets"></a>
+
+### create_secret <a id="create_secret"></a>
+action: **create_secret**<br>
+Create a secret.<br>
+variables:<br>
+<kbd>(none).</kbd><br>
+
+### destroy_secret <a id="destroy_secret"></a>
+action: **destroy_secret**<br>
+Remove a secret.<br>
+variables:<br>
+<kbd>(none).</kbd><br>
+
+### export_secrets <a id="export_secrets"></a>
+action: **export_secrets**<br>
+Export a secret from Vault.<br>
+variables:<br>
 <kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 <br>
 
-### get_secret
-action: **get_secret**
-Retrieve a secret.
-variables:
+### get_secret <a id="get_secret"></a>
+action: **get_secret**<br>
+Retrieve a secret.<br>
+variables:<br>
 <kbd>(none).</kbd><br>
 
-### import_secrets
-action: **import_secrets**
-Import a secret into Vault.
-variables:
+### import_secrets <a id="import_secrets"></a>
+action: **import_secrets**<br>
+Import a secret into Vault.<br>
+variables:<br>
 <kbd>vault_address</kbd>:  URL to Vault, for example `https://192.168.1.0:8200`.. Default value: (none).<br>
 <kbd>vault_token</kbd>:  Token for access to Vault.. Default value: (none).<br>
 <br>
