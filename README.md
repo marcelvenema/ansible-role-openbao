@@ -31,7 +31,7 @@ Available variables are listed in defaults, see [`defaults/main.yml`](defaults/m
 
 <table style="border:0px; width:100%">
   <tr>
-  <th><a href="#administration">administration</a></th><th><a href="#approles">approles</a></th><th><a href="#deployment">deployment</a></th><th><a href="#policies">policies</a></th><th><a href="#secret_engines">secret_engines</a></th><th><a href="#secrets">secrets</a></th>
+  <th><a href="docs/index.md#administration">administration</a></th><th><a href="docs/index.md#approles">approles</a></th><th><a href="docs/index.md#deployment">deployment</a></th><th><a href="docs/index.md#policies">policies</a></th><th><a href="docs/index.md#secret_engines">secret_engines</a></th><th><a href="docs/index.md#secrets">secrets</a></th>
   </tr>
   <tr><td valign=top>start<br>stop<br>unseal<br></td><td valign=top>create_approle<br>destroy_approle<br>get_approle<br></td><td valign=top>configure<br>install<br>uninstall<br>update<br></td><td valign=top>create_policy<br>destroy_policy<br>get_policy<br></td><td valign=top>create_secret_engine<br>destroy_secret_engine<br>get_secret_engine<br></td><td valign=top>create_secret<br>destroy_secret<br>export_secrets<br>get_secret<br>import_secrets<br></td></tr>
 </table>
